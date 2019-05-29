@@ -31,11 +31,11 @@ class BuilderTest extends TestCase
         }
     }
 
-    public function testGeneratedMethod()
+    public function testGeneratedGetProperty()
     {
         $expected = 'public function getFoo(): string{    return $this->foo;}';
 
-        $s = $this->generator->generatedMethod('foo', 'string');
+        $s = $this->generator->generatedGetProperty('foo', 'string');
         // convert string to one line for easy testing
         $actual = \str_replace("\n", '', $s);
 
