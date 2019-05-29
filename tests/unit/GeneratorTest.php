@@ -30,4 +30,15 @@ class BuilderTest extends TestCase
             $this->assertTrue($valid);
         }
     }
+
+    public function testGeneratedMethod()
+    {
+        $expected = 'public function getFoo(): string{    return $this->foo;}';
+
+        $s = $this->generator->generatedMethod('foo', 'string');
+        // convert string to one line for easy testing
+        $actual = \str_replace("\n", '', $s);
+
+        $this->assertEquals($expected, $actual);
+    }
 }
