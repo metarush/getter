@@ -25,6 +25,18 @@ class Generator
         return $s;
     }
 
+    public function getType($value): string
+    {
+        if (is_array($value))
+            return 'array';
+        if (is_bool($value))
+            return 'bool';
+        if (is_int($value))
+            return 'int';
+
+        return 'string';
+    }
+
     public function validType(string $type): bool
     {
         $validTypes = [

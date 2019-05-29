@@ -49,4 +49,21 @@ class BuilderTest extends TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
+    public function testGetType()
+    {
+        $a = [
+            'int'    => 9,
+            'bool'   => true,
+            'array'  => [1, 2],
+            'string' => 'foo',
+            'string' => 1.2
+        ];
+
+        foreach ($a as $k => $v) {
+            $expected = $k;
+            $actual = $this->generator->getType($v);
+            $this->assertEquals($expected, $actual);
+        }
+    }
 }
