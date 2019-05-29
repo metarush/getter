@@ -44,8 +44,8 @@ class BuilderTest extends TestCase
 
     public function testGeneratedField()
     {
-        $expected = 'private $foo;' . "\n";
-        $actual = $this->generator->generatedField('foo');
+        $expected = "private \$foo = 'bar';\n";
+        $actual = $this->generator->generatedField('foo', 'bar');
 
         $this->assertEquals($expected, $actual);
     }
