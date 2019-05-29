@@ -15,7 +15,7 @@ class Generator
         $s = 'public function get' . ucwords($name) . "(): " . $type . "\n";
         $s .= "{\n";
         $s .= '    return $this->' . $name . ";\n";
-        $s .= "}\n";
+        $s .= "}\n\n";
 
         return $s;
     }
