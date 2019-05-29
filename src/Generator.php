@@ -7,9 +7,9 @@ namespace MetaRush\Getter;
 class Generator
 {
 
-    public function functionName()
+    public function generatedField(string $name): string
     {
-
+        return 'private $' . $name . ";\n";
     }
 
     public function generatedGetProperty(string $name, string $type): string
