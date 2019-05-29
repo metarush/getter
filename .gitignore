@@ -1,0 +1,9 @@
+composer.phar
+phpunit.xml
+phpunit.php
+.phpunit.result.cache
+vendor/
+public/
+resources/docker/
+nbproject/
+.env

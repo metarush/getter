@@ -1,0 +1,29 @@
+{
+    "name": "metarush/env-class",
+    "type": "library",
+    "description": "Convert variables in an .env to a class with getter methods",
+    "keywords": [
+        "php",
+        "env",
+        "getter setter",
+        "class"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "metarush/env-class contributors",
+            "homepage": "https://github.com/metarush/env-class/graphs/contributors"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "MetaRush\\EnvClass\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}
