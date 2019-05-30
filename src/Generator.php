@@ -7,6 +7,16 @@ namespace MetaRush\Getter;
 class Generator
 {
 
+    public function generateClassFile(string $name, array $data, ?string $location = null): void
+    {
+        $header = "<?php\n\ndeclare(strict_types=1);\n\n";
+
+        $classSyntax = $this->generatedClass($name, $data);
+
+        if (!\file_put_contents($location . $name . '.php', $header . $classSyntax))
+            throw new Exception('Unable to create class file');
+    }
+
     public function generatedClass(string $name, array $data): string
     {
         $s = 'class ' . $name . "\n";

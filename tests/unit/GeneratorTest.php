@@ -111,7 +111,6 @@ class GeneratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-
     public function testArraySyntax()
     {
         $array = ['foo', false, 'bar', 1];
@@ -119,5 +118,24 @@ class GeneratorTest extends TestCase
         $actual = $this->generator->arraySyntax($array);
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testGenerateClassFile()
+    {
+        $data = [
+            'stringVar' => 'foo',
+            'intVar'    => 9,
+            'floatVar'  => 1.2,
+            'boolVar'   => true,
+            'arrayVar'  => [1, 'bar', [3, 4.2]],
+        ];
+
+        $location = __DIR__ . '/';
+
+        $this->generator->generateClassFile('Foo', $data, $location);
+
+        $this->assertFileExists($location . 'Foo.php');
+
+        \unlink($location . 'Foo.php');
     }
 }
