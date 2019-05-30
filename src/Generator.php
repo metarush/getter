@@ -7,9 +7,42 @@ namespace MetaRush\Getter;
 class Generator
 {
 
-    public function generatedField(string $name, string $value): string
+    public function generatedClass(string $name, array $data): string
     {
-        return 'private $' . $name . " = '" . $value . "';\n";
+        $s = 'class ' . $name . "\n";
+        $s .= "{\n";
+
+        foreach ($data as $k => $v)
+            $s .= $this->generatedField($k, $v);
+
+        $s .= "\n";
+
+        foreach ($data as $k => $v) {
+            $type = $this->getType($v);
+            $s .= $this->generatedGetProperty($k, $type);
+        }
+
+        $s .= "}\n";
+
+        return $s;
+    }
+
+    public function generatedField(string $name, $value): string
+    {
+        $type = $this->getType($value);
+
+        if ($type == 'string')
+            $s = "'{$value}'";
+        elseif ($type == 'int')
+            $s = $value;
+        elseif ($type == 'float')
+            $s = $value;
+        elseif ($type == 'bool')
+            $s = $value ? 'true' : 'false';
+        elseif ($type == 'array')
+            $s = '[' . implode(',', $value) . ']';
+
+        return '    private $' . $name . " = $s;\n";
     }
 
     public function generatedGetProperty(string $name, string $type): string
@@ -17,22 +50,24 @@ class Generator
         if (!$this->validType($type))
             throw new \InvalidArgumentException('Invalid argument: ' . $type);
 
-        $s = 'public function get' . \ucwords($name) . "(): " . $type . "\n";
-        $s .= "{\n";
-        $s .= '    return $this->' . $name . ";\n";
-        $s .= "}\n\n";
+        $s = '    public function get' . \ucwords($name) . "(): " . $type . "\n";
+        $s .= "    {\n";
+        $s .= '        return $this->' . $name . ";\n";
+        $s .= "    }\n\n";
 
         return $s;
     }
 
     public function getType($value): string
     {
-        if (is_array($value))
-            return 'array';
-        if (is_bool($value))
-            return 'bool';
-        if (is_int($value))
+        if (\is_int($value))
             return 'int';
+        if (\is_float($value))
+            return 'float';
+        if (\is_bool($value))
+            return 'bool';
+        if (\is_array($value))
+            return 'array';
 
         return 'string';
     }
@@ -42,6 +77,7 @@ class Generator
         $validTypes = [
             'string',
             'int',
+            'float',
             'bool',
             'array'
         ];
