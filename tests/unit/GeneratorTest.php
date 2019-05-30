@@ -35,7 +35,7 @@ class GeneratorTest extends TestCase
     {
         $expected = '    public function getFoo(): string    {        return $this->foo;    }';
 
-        $s = $this->generator->generatedGetProperty('foo', 'string');
+        $s = $this->generator->propertySyntax('foo', 'string');
         // convert string to one line for easy testing
         $actual = \str_replace("\n", '', $s);
 
@@ -46,23 +46,23 @@ class GeneratorTest extends TestCase
     {
         // test string
         $expected = "    private \$foo = 'bar';\n";
-        $actual = $this->generator->generatedField('foo', 'bar');
+        $actual = $this->generator->fieldSyntax('foo', 'bar');
 
         // test int
         $expected = "    private \$foo = 9;\n";
-        $actual = $this->generator->generatedField('foo', 9);
+        $actual = $this->generator->fieldSyntax('foo', 9);
 
         // test float
         $expected = "    private \$foo = 1.2;\n";
-        $actual = $this->generator->generatedField('foo', 1.2);
+        $actual = $this->generator->fieldSyntax('foo', 1.2);
 
         // test bool
         $expected = "    private \$foo = false;\n";
-        $actual = $this->generator->generatedField('foo', false);
+        $actual = $this->generator->fieldSyntax('foo', false);
 
         // tets array
         $expected = "    private \$foo = [1, 2, 3];\n";
-        $actual = $this->generator->generatedField('foo', [1, 2, 3]);
+        $actual = $this->generator->fieldSyntax('foo', [1, 2, 3]);
 
         $this->assertEquals($expected, $actual);
     }
@@ -110,6 +110,7 @@ class GeneratorTest extends TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
 
     public function testArraySyntax()
     {

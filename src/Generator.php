@@ -13,13 +13,13 @@ class Generator
         $s .= "{\n";
 
         foreach ($data as $k => $v)
-            $s .= $this->generatedField($k, $v);
+            $s .= $this->fieldSyntax($k, $v);
 
         $s .= "\n";
 
         foreach ($data as $k => $v) {
             $type = $this->getType($v);
-            $s .= $this->generatedGetProperty($k, $type);
+            $s .= $this->propertySyntax($k, $type);
         }
 
         $s .= "}\n";
@@ -27,14 +27,14 @@ class Generator
         return $s;
     }
 
-    public function generatedField(string $name, $value): string
+    public function fieldSyntax(string $name, $value): string
     {
         $varValueSyntax = $this->varValueSyntax($value);
 
         return '    private $' . $name . " = $varValueSyntax;\n";
     }
 
-    public function generatedGetProperty(string $name, string $type): string
+    public function propertySyntax(string $name, string $type): string
     {
         if (!$this->validType($type))
             throw new \InvalidArgumentException('Invalid argument: ' . $type);
@@ -81,7 +81,7 @@ class Generator
         foreach ($a as $v)
             $s .= $this->varValueSyntax($v) . ', ';
 
-        return trim($s, ', ') . ']';
+        return \trim($s, ', ') . ']';
     }
 
     public function varValueSyntax($value)
