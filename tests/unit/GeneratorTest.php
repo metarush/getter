@@ -31,7 +31,7 @@ class GeneratorTest extends TestCase
         }
     }
 
-    public function testGeneratedGetProperty()
+    public function testPropertySyntax()
     {
         $expected = '    public function getFoo(): string    {        return $this->foo;    }';
 
@@ -47,7 +47,7 @@ class GeneratorTest extends TestCase
         $s = $this->generator->propertySyntax('foo', 'zstring');
     }
 
-    public function testGeneratedField()
+    public function testFieldSyntax()
     {
         // test string
         $expected = "    private \$foo = 'bar';\n";
