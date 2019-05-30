@@ -29,20 +29,9 @@ class Generator
 
     public function generatedField(string $name, $value): string
     {
-        $type = $this->getType($value);
+        $varValueSyntax = $this->varValueSyntax($value);
 
-        if ($type == 'string')
-            $s = "'{$value}'";
-        elseif ($type == 'int')
-            $s = $value;
-        elseif ($type == 'float')
-            $s = $value;
-        elseif ($type == 'bool')
-            $s = $value ? 'true' : 'false';
-        elseif ($type == 'array')
-            $s = '[' . implode(',', $value) . ']';
-
-        return '    private $' . $name . " = $s;\n";
+        return '    private $' . $name . " = $varValueSyntax;\n";
     }
 
     public function generatedGetProperty(string $name, string $type): string
@@ -83,5 +72,33 @@ class Generator
         ];
 
         return \in_array($type, $validTypes);
+    }
+
+    public function arraySyntax(array $a)
+    {
+        $s = '[';
+
+        foreach ($a as $v)
+            $s .= $this->varValueSyntax($v) . ', ';
+
+        return trim($s, ', ') . ']';
+    }
+
+    public function varValueSyntax($value)
+    {
+        $type = $this->getType($value);
+
+        if ($type == 'string')
+            $s = "'{$value}'";
+        elseif ($type == 'int')
+            $s = $value;
+        elseif ($type == 'float')
+            $s = $value;
+        elseif ($type == 'bool')
+            $s = $value ? 'true' : 'false';
+        elseif ($type == 'array')
+            $s = $this->arraySyntax($value);
+
+        return $s;
     }
 }

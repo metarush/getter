@@ -61,7 +61,7 @@ class GeneratorTest extends TestCase
         $actual = $this->generator->generatedField('foo', false);
 
         // tets array
-        $expected = "    private \$foo = [1,2,3];\n";
+        $expected = "    private \$foo = [1, 2, 3];\n";
         $actual = $this->generator->generatedField('foo', [1, 2, 3]);
 
         $this->assertEquals($expected, $actual);
@@ -94,10 +94,29 @@ class GeneratorTest extends TestCase
             'arrayVar'  => [1, 2],
         ];
 
-        $expected = 'class MyClass{    private $stringVar = \'foo\';    private $intVar = 9;    private $floatVar = 1.2;    private $boolVar = true;    private $arrayVar = [1,2];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getIntVar(): int    {        return $this->intVar;    }    public function getFloatVar(): float    {        return $this->floatVar;    }    public function getBoolVar(): bool    {        return $this->boolVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
+        $expected = 'class MyClass{    private $stringVar = \'foo\';    private $intVar = 9;    private $floatVar = 1.2;    private $boolVar = true;    private $arrayVar = [1, 2];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getIntVar(): int    {        return $this->intVar;    }    public function getFloatVar(): float    {        return $this->floatVar;    }    public function getBoolVar(): bool    {        return $this->boolVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
 
         $s = $this->generator->generatedClass('MyClass', $a);
         $actual = \str_replace("\n", '', $s);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testVarValueSyntax()
+    {
+        $value = [1, 'foo', true, [2.5, ['bar', false, 'qux']]];
+
+        $expected = "[1, 'foo', true, [2.5, ['bar', false, 'qux']]]";
+        $actual = $this->generator->varValueSyntax($value);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testArraySyntax()
+    {
+        $array = ['foo', false, 'bar', 1];
+        $expected = "['foo', false, 'bar', 1]";
+        $actual = $this->generator->arraySyntax($array);
+
         $this->assertEquals($expected, $actual);
     }
 }
