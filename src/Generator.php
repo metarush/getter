@@ -13,8 +13,7 @@ class Generator
 
         $classSyntax = $this->generatedClass($name, $data);
 
-        if (!\file_put_contents($location . $name . '.php', $header . $classSyntax))
-            throw new Exception('Unable to create class file');
+        \file_put_contents($location . $name . '.php', $header . $classSyntax);
     }
 
     public function generatedClass(string $name, array $data): string

@@ -40,6 +40,11 @@ class GeneratorTest extends TestCase
         $actual = \str_replace("\n", '', $s);
 
         $this->assertEquals($expected, $actual);
+
+        // ------------------------------------------------
+
+        $this->expectException('\InvalidArgumentException');
+        $s = $this->generator->propertySyntax('foo', 'zstring');
     }
 
     public function testGeneratedField()
