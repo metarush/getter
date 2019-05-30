@@ -7,6 +7,14 @@ namespace MetaRush\Getter;
 class SyntaxGenerator
 {
 
+    /**
+     * Generate class file
+     *
+     * @param string $className
+     * @param array $data
+     * @param string|null $location
+     * @return void
+     */
     public function generateClassFile(string $className, array $data, ?string $location = null): void
     {
         $header = "<?php\n\ndeclare(strict_types=1);\n\n";
@@ -16,9 +24,16 @@ class SyntaxGenerator
         \file_put_contents($location . $className . '.php', $header . $classSyntax);
     }
 
-    public function classSyntax(string $name, array $data): string
+    /**
+     * Get class syntax
+     *
+     * @param string $className
+     * @param array $data
+     * @return string
+     */
+    public function classSyntax(string $className, array $data): string
     {
-        $s = 'class ' . $name . "\n";
+        $s = 'class ' . $className . "\n";
         $s .= "{\n";
 
         foreach ($data as $k => $v)
@@ -36,13 +51,28 @@ class SyntaxGenerator
         return $s;
     }
 
-    public function fieldSyntax(string $name, $value): string
+    /**
+     * Get class field syntax
+     *
+     * @param string $fieldName
+     * @param type $value
+     * @return string
+     */
+    public function fieldSyntax(string $fieldName, $value): string
     {
         $varValueSyntax = $this->varValueSyntax($value);
 
-        return '    private $' . $name . " = $varValueSyntax;\n";
+        return '    private $' . $fieldName . " = $varValueSyntax;\n";
     }
 
+    /**
+     * Get class property syntax
+     *
+     * @param string $name
+     * @param string $type
+     * @return string
+     * @throws \InvalidArgumentException
+     */
     public function propertySyntax(string $name, string $type): string
     {
         if (!$this->validType($type))
@@ -56,6 +86,12 @@ class SyntaxGenerator
         return $s;
     }
 
+    /**
+     * Get value type
+     *
+     * @param type $value
+     * @return string
+     */
     public function getType($value): string
     {
         if (\is_int($value))
@@ -70,6 +106,12 @@ class SyntaxGenerator
         return 'string';
     }
 
+    /**
+     * Check if type is valid
+     *
+     * @param string $type
+     * @return bool
+     */
     public function validType(string $type): bool
     {
         $validTypes = [
@@ -83,6 +125,12 @@ class SyntaxGenerator
         return \in_array($type, $validTypes);
     }
 
+    /**
+     * Get field value syntax for arrays
+     *
+     * @param array $a
+     * @return type
+     */
     public function arraySyntax(array $a)
     {
         $s = '[';
@@ -93,6 +141,12 @@ class SyntaxGenerator
         return \trim($s, ', ') . ']';
     }
 
+    /**
+     * Get field value syntax
+     *
+     * @param type $value
+     * @return type
+     */
     public function varValueSyntax($value)
     {
         $type = $this->getType($value);
