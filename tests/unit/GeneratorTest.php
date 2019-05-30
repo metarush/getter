@@ -18,8 +18,9 @@ class GeneratorTest extends TestCase
         $validTypes = [
             'string',
             'int',
+            'float',
             'bool',
-            'array'
+            'array',
         ];
 
         $valid = $this->generator->validType('foo');
@@ -89,7 +90,7 @@ class GeneratorTest extends TestCase
         }
     }
 
-    public function testGeneratedClass()
+    public function testClassSyntax()
     {
         $a = [
             'stringVar' => 'foo',
@@ -101,7 +102,7 @@ class GeneratorTest extends TestCase
 
         $expected = 'class MyClass{    private $stringVar = \'foo\';    private $intVar = 9;    private $floatVar = 1.2;    private $boolVar = true;    private $arrayVar = [1, 2];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getIntVar(): int    {        return $this->intVar;    }    public function getFloatVar(): float    {        return $this->floatVar;    }    public function getBoolVar(): bool    {        return $this->boolVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
 
-        $s = $this->generator->generatedClass('MyClass', $a);
+        $s = $this->generator->classSyntax('MyClass', $a);
         $actual = \str_replace("\n", '', $s);
         $this->assertEquals($expected, $actual);
     }

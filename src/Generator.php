@@ -7,16 +7,16 @@ namespace MetaRush\Getter;
 class Generator
 {
 
-    public function generateClassFile(string $name, array $data, ?string $location = null): void
+    public function generateClassFile(string $className, array $data, ?string $location = null): void
     {
         $header = "<?php\n\ndeclare(strict_types=1);\n\n";
 
-        $classSyntax = $this->generatedClass($name, $data);
+        $classSyntax = $this->classSyntax($className, $data);
 
-        \file_put_contents($location . $name . '.php', $header . $classSyntax);
+        \file_put_contents($location . $className . '.php', $header . $classSyntax);
     }
 
-    public function generatedClass(string $name, array $data): string
+    public function classSyntax(string $name, array $data): string
     {
         $s = 'class ' . $name . "\n";
         $s .= "{\n";
