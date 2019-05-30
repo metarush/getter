@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MetaRush\Getter;
 
-class Generator
+class SyntaxGenerator
 {
 
     public function generateClassFile(string $className, array $data, ?string $location = null): void

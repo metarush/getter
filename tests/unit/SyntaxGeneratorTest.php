@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-class GeneratorTest extends TestCase
+class SyntaxGeneratorTest extends TestCase
 {
-    private $generator;
+    private $sG;
 
     public function setUp(): void
     {
-        $this->generator = new \MetaRush\Getter\Generator;
+        $this->sG = new \MetaRush\Getter\SyntaxGenerator;
     }
 
     public function testValidType()
@@ -23,11 +23,11 @@ class GeneratorTest extends TestCase
             'array',
         ];
 
-        $valid = $this->generator->validType('foo');
+        $valid = $this->sG->validType('foo');
         $this->assertFalse($valid);
 
         foreach ($validTypes as $type) {
-            $valid = $this->generator->validType($type);
+            $valid = $this->sG->validType($type);
             $this->assertTrue($valid);
         }
     }
@@ -36,7 +36,7 @@ class GeneratorTest extends TestCase
     {
         $expected = '    public function getFoo(): string    {        return $this->foo;    }';
 
-        $s = $this->generator->propertySyntax('foo', 'string');
+        $s = $this->sG->propertySyntax('foo', 'string');
         // convert string to one line for easy testing
         $actual = \str_replace("\n", '', $s);
 
@@ -45,30 +45,30 @@ class GeneratorTest extends TestCase
         // ------------------------------------------------
 
         $this->expectException('\InvalidArgumentException');
-        $s = $this->generator->propertySyntax('foo', 'zstring');
+        $s = $this->sG->propertySyntax('foo', 'zstring');
     }
 
     public function testFieldSyntax()
     {
         // test string
         $expected = "    private \$foo = 'bar';\n";
-        $actual = $this->generator->fieldSyntax('foo', 'bar');
+        $actual = $this->sG->fieldSyntax('foo', 'bar');
 
         // test int
         $expected = "    private \$foo = 9;\n";
-        $actual = $this->generator->fieldSyntax('foo', 9);
+        $actual = $this->sG->fieldSyntax('foo', 9);
 
         // test float
         $expected = "    private \$foo = 1.2;\n";
-        $actual = $this->generator->fieldSyntax('foo', 1.2);
+        $actual = $this->sG->fieldSyntax('foo', 1.2);
 
         // test bool
         $expected = "    private \$foo = false;\n";
-        $actual = $this->generator->fieldSyntax('foo', false);
+        $actual = $this->sG->fieldSyntax('foo', false);
 
         // tets array
         $expected = "    private \$foo = [1, 2, 3];\n";
-        $actual = $this->generator->fieldSyntax('foo', [1, 2, 3]);
+        $actual = $this->sG->fieldSyntax('foo', [1, 2, 3]);
 
         $this->assertEquals($expected, $actual);
     }
@@ -85,7 +85,7 @@ class GeneratorTest extends TestCase
 
         foreach ($a as $k => $v) {
             $expected = $k;
-            $actual = $this->generator->getType($v);
+            $actual = $this->sG->getType($v);
             $this->assertEquals($expected, $actual);
         }
     }
@@ -102,7 +102,7 @@ class GeneratorTest extends TestCase
 
         $expected = 'class MyClass{    private $stringVar = \'foo\';    private $intVar = 9;    private $floatVar = 1.2;    private $boolVar = true;    private $arrayVar = [1, 2];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getIntVar(): int    {        return $this->intVar;    }    public function getFloatVar(): float    {        return $this->floatVar;    }    public function getBoolVar(): bool    {        return $this->boolVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
 
-        $s = $this->generator->classSyntax('MyClass', $a);
+        $s = $this->sG->classSyntax('MyClass', $a);
         $actual = \str_replace("\n", '', $s);
         $this->assertEquals($expected, $actual);
     }
@@ -112,7 +112,7 @@ class GeneratorTest extends TestCase
         $value = [1, 'foo', true, [2.5, ['bar', false, 'qux']]];
 
         $expected = "[1, 'foo', true, [2.5, ['bar', false, 'qux']]]";
-        $actual = $this->generator->varValueSyntax($value);
+        $actual = $this->sG->varValueSyntax($value);
 
         $this->assertEquals($expected, $actual);
     }
@@ -121,7 +121,7 @@ class GeneratorTest extends TestCase
     {
         $array = ['foo', false, 'bar', 1];
         $expected = "['foo', false, 'bar', 1]";
-        $actual = $this->generator->arraySyntax($array);
+        $actual = $this->sG->arraySyntax($array);
 
         $this->assertEquals($expected, $actual);
     }
@@ -138,7 +138,7 @@ class GeneratorTest extends TestCase
 
         $location = __DIR__ . '/';
 
-        $this->generator->generateClassFile('Foo', $data, $location);
+        $this->sG->generateClassFile('Foo', $data, $location);
 
         $this->assertFileExists($location . 'Foo.php');
 
