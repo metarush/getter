@@ -1,0 +1,7 @@
+stringVar: 'foo'
+intVar: 9
+floatVar: 2.1
+boolVar: true
+arrayVar:
+  - foo
+  - 1.3

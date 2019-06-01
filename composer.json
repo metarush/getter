@@ -22,7 +22,9 @@
     },
     "require": {
         "php": ">=7.1",
-        "phpunit/phpunit": "^8"
+        "phpunit/phpunit": "^8",
+        "m1/env": "^2.1",
+        "symfony/yaml": "^4.3"
     },
     "require-dev": {
     }
