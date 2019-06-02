@@ -59,7 +59,7 @@ class SyntaxGenerator
     public function propertySyntax(string $name, string $type): string
     {
         if (!$this->validType($type))
-            throw new \InvalidArgumentException('Invalid argument: ' . $type);
+            throw new Exception('Invalid argument: ' . $type);
 
         $s = '    public function get' . \ucwords($name) . "(): " . $type . "\n";
         $s .= "    {\n";

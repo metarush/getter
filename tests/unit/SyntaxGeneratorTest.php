@@ -44,7 +44,7 @@ class SyntaxGeneratorTest extends TestCase
 
         // ------------------------------------------------
 
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException('Exception');
         $s = $this->sG->propertySyntax('foo', 'zstring');
     }
 
