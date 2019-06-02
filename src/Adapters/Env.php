@@ -14,6 +14,14 @@ class Env extends Getter\AbstractFileGenerator
         parent::__construct($syntaxGenerator);
     }
 
+    /**
+     * Generate class file
+     *
+     * @param string $className
+     * @param string $envFile
+     * @param string $location Where to save the generated file
+     * @return void
+     */
     public function generate(string $className, string $envFile, string $location): void
     {
         $envContents = file_get_contents($envFile);

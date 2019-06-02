@@ -11,6 +11,7 @@ class Generator extends Config
      * Generate class file
      *
      * @return void
+     * @throws Exception
      */
     public function generate(): void
     {

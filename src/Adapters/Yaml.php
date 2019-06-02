@@ -14,6 +14,14 @@ class Yaml extends Getter\AbstractFileGenerator
         parent::__construct($syntaxGenerator);
     }
 
+    /**
+     * Generate class file
+     *
+     * @param string $className
+     * @param string $yamlFile
+     * @param string $location Where to save the generated file
+     * @return void
+     */
     public function generate(string $className, string $yamlFile, string $location): void
     {
         $data = \Symfony\Component\Yaml\Yaml::parseFile($yamlFile);

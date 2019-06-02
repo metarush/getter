@@ -54,7 +54,7 @@ class SyntaxGenerator
      * @param string $name
      * @param string $type
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws Exception
      */
     public function propertySyntax(string $name, string $type): string
     {
