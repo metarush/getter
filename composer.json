@@ -1,18 +1,19 @@
 {
     "name": "metarush/getter",
     "type": "library",
-    "description": "Convert variables in an .env to a class with getter methods",
+    "description": "Generate a class with getter methods from a yaml or env file",
     "keywords": [
         "php",
         "env",
         "getter setter",
-        "class"
+        "class",
+        "generator"
     ],
     "license": "MIT",
     "authors": [
         {
-            "name": "metarush/env-class contributors",
-            "homepage": "https://github.com/metarush/env-class/graphs/contributors"
+            "name": "metarush/getter contributors",
+            "homepage": "https://github.com/metarush/getter/graphs/contributors"
         }
     ],
     "autoload": {
