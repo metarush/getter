@@ -17,7 +17,7 @@ class YamlAdapterTest extends TestCase
 
     public function testGenerateClassFile()
     {
-        $location = __DIR__ . '/';
+        $location = __DIR__ . '/samples/';
         $yamlFile = $location . 'sample.yaml';
 
         $this->fileGenerator->generate('FooYaml', $yamlFile, $location);

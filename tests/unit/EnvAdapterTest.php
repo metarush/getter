@@ -17,7 +17,7 @@ class EnvAdapterTest extends TestCase
 
     public function testGenerateClassFile()
     {
-        $location = __DIR__ . '/';
+        $location = __DIR__ . '/samples/';
         $envFile = $location . 'sample.env';
 
         $this->fileGenerator->generate('FooEnv', $envFile, $location);

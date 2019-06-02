@@ -14,7 +14,7 @@ class GeneratorTest extends TestCase
 
     public function testGenerateClassFromYamlFile()
     {
-        $location = __DIR__ . '/';
+        $location = __DIR__ . '/samples/';
         $className = 'YamlTest';
 
         (new \MetaRush\Getter\Generator)
@@ -31,7 +31,7 @@ class GeneratorTest extends TestCase
 
     public function testGenerateClassFromYamlEnvFile()
     {
-        $location = __DIR__ . '/';
+        $location = __DIR__ . '/samples/';
         $className = 'EnvTest';
 
         (new \MetaRush\Getter\Generator)
