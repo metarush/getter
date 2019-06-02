@@ -20,10 +20,10 @@ class YamlAdapterTest extends TestCase
         $location = __DIR__ . '/';
         $yamlFile = $location . 'sample.yaml';
 
-        $this->fileGenerator->generate('Foo', $yamlFile, $location);
+        $this->fileGenerator->generate('FooYaml', $yamlFile, $location);
 
-        $this->assertFileExists($location . 'Foo.php');
+        $this->assertFileExists($location . 'FooYaml.php');
 
-        \unlink($location . 'Foo.php');
+        \unlink($location . 'FooYaml.php');
     }
 }
