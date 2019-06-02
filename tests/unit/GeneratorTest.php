@@ -7,11 +7,6 @@ use PHPUnit\Framework\TestCase;
 class GeneratorTest extends TestCase
 {
 
-    public function setUp(): void
-    {
-
-    }
-
     public function testGenerateClassFromYamlFile()
     {
         $location = __DIR__ . '/samples/';
@@ -44,5 +39,20 @@ class GeneratorTest extends TestCase
         $this->assertFileExists($location . $className . '.php');
 
         \unlink($location . $className . '.php');
+    }
+
+    public function testExeption()
+    {
+        $this->expectException('Exception');
+
+        $location = __DIR__ . '/samples/';
+        $className = 'EnvTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('foo')
+            ->setClassName($className)
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.env')
+            ->generate();
     }
 }
