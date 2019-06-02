@@ -6,11 +6,13 @@ use PHPUnit\Framework\TestCase;
 
 class YamlAdapterTest extends TestCase
 {
-    private $fG;
+    private $fileGenerator;
 
     public function setUp(): void
     {
-        $this->fG = new \MetaRush\Getter\Adapters\Yaml;
+        $syntaxGenerator = new \MetaRush\Getter\SyntaxGenerator;
+
+        $this->fileGenerator = new \MetaRush\Getter\Adapters\Yaml($syntaxGenerator);
     }
 
     public function testGenerateClassFile()
@@ -18,7 +20,7 @@ class YamlAdapterTest extends TestCase
         $location = __DIR__ . '/';
         $yamlFile = $location . 'sample.yaml';
 
-        $this->fG->generate('Foo', $yamlFile, $location);
+        $this->fileGenerator->generate('Foo', $yamlFile, $location);
 
         $this->assertFileExists($location . 'Foo.php');
 

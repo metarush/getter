@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace MetaRush\Getter\Adapters;
 
-class Yaml extends \MetaRush\Getter\AbstractFileGenerator
+use MetaRush\Getter;
+
+class Yaml extends Getter\AbstractFileGenerator
 {
+
+    public function __construct(Getter\SyntaxGenerator $syntaxGenerator)
+    {
+        parent::__construct($syntaxGenerator);
+    }
 
     public function generate(string $className, string $yamlFile, string $location): void
     {

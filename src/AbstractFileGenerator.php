@@ -6,11 +6,11 @@ namespace MetaRush\Getter;
 
 abstract class AbstractFileGenerator
 {
-    private $sG;
+    private $syntaxGenerator;
 
-    public function __construct()
+    public function __construct(SyntaxGenerator $syntaxGenerator)
     {
-        $this->sG = new SyntaxGenerator;
+        $this->syntaxGenerator = $syntaxGenerator;
     }
 
     /**
@@ -25,7 +25,7 @@ abstract class AbstractFileGenerator
     {
         $header = "<?php\n\ndeclare(strict_types=1);\n\n";
 
-        $classSyntax = $this->sG->classSyntax($className, $data);
+        $classSyntax = $this->syntaxGenerator->classSyntax($className, $data);
 
         \file_put_contents($location . $className . '.php', $header . $classSyntax);
     }
