@@ -9,12 +9,12 @@ Install via composer as `metarush/getter`
 
 ## Sample usage
 
-The following will generate a class named `MyNewClass` from contents of `/foo/sample.yaml` using `yaml` adapter.
-The generated class will be saved in `/foo/` folder.
+The following will generate a class named `MyNewClass` from contents of `foo/sample.yaml` using `yaml` adapter.
+The generated class will be saved in `foo/` folder.
 
 ### via CLI
 
-`vendor/metarush/getter/bin/generate yaml MyNewClass /foo/sample.yaml /foo/ OptionalClassToExtend`
+`vendor/metarush/getter/bin/generate yaml MyNewClass foo/sample.yaml foo/ MyNamespace OptionalClassToExtend`
 
 ### via PHP script
 
@@ -22,8 +22,9 @@ The generated class will be saved in `/foo/` folder.
 (new \MetaRush\Getter\Generator)
     ->setAdapter('yaml')
     ->setClassName('MyNewClass')
-    ->setLocation('/foo/')
-    ->setSourceFile('/foo/sample.yaml')
+    ->setLocation('foo/')
+    ->setSourceFile('foo/sample.yaml')
+    ->setNamespace('MyNamespace')
     ->setExtendedClass('OptionalClassToExtend') // optional
     ->generate();
 ```
@@ -42,14 +43,16 @@ E.g., located in `foo/sample.yaml`
 
 ### Sample generated class
 
-E.g., located in `/foo/MyNewClass.php`
+E.g., located in `foo/MyNewClass.php`
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-class MyNewClass
+namespace MyNamespace;
+
+class MyNewClass extends OptionalClassToExtend
 {
     private $stringVar = 'foo';
     private $intVar = 9;

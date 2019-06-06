@@ -40,6 +40,13 @@ class Config
      */
     private $location;
 
+    /**
+     * Namespace of the generated class
+     *
+     * @var string
+     */
+    private $namespace;
+
     public function getAdapter(): string
     {
         return $this->adapter;
@@ -63,6 +70,11 @@ class Config
     public function getExtendedClass(): ?string
     {
         return $this->extendedClass;
+    }
+
+    public function getNamespace(): ?string
+    {
+        return $this->namespace;
     }
 
     public function setAdapter(string $adapter)
@@ -92,6 +104,12 @@ class Config
     public function setExtendedClass(?string $extendedClass)
     {
         $this->extendedClass = $extendedClass;
+        return $this;
+    }
+
+    public function setNamespace(?string $namespace)
+    {
+        $this->namespace = $namespace;
         return $this;
     }
 }

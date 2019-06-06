@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.0.0 - 2019-06-07
+
+### Added
+
+- Add namespace in generated class
+
 ## 1.1.3 - 2019-06-06
 
 ### Fixed

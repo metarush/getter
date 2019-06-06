@@ -24,6 +24,7 @@ class Generator extends Config
         $fgCfg->setClassName($this->getClassName());
         $fgCfg->setLocation($this->getLocation());
         $fgCfg->setExtendedClass($this->getExtendedClass());
+        $fgCfg->setNamespace($this->getNamespace());
 
         if ($this->getAdapter() === 'yaml') {
             $generator = new Adapters\Yaml($fgCfg, $syntaxGenerator);

@@ -28,6 +28,9 @@ abstract class AbstractFileGenerator
     {
         $header = "<?php\n\ndeclare(strict_types=1);\n\n";
 
+        if ($this->cfg->getNamespace())
+            $header .= 'namespace ' . $this->cfg->getNamespace() . ";\n\n";
+
         $classSyntax = $this->syntaxGenerator->classSyntax($this->cfg->getClassName(), $this->cfg->getData(), $this->cfg->getExtendedClass());
 
         \file_put_contents($this->cfg->getLocation() . $this->cfg->getClassName() . '.php', $header . $classSyntax);

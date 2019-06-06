@@ -34,6 +34,13 @@ class FileGeneratorConfig
      */
     private $extendedClass;
 
+    /**
+     * Namespace of the generated class
+     *
+     * @var string
+     */
+    private $namespace;
+
     public function getClassName(): ?string
     {
         return $this->className;
@@ -52,6 +59,11 @@ class FileGeneratorConfig
     public function getExtendedClass(): ?string
     {
         return $this->extendedClass;
+    }
+
+    public function getNamespace(): ?string
+    {
+        return $this->namespace;
     }
 
     public function setClassName(?string $className)
@@ -75,6 +87,12 @@ class FileGeneratorConfig
     public function setExtendedClass(?string $extendedClass)
     {
         $this->extendedClass = $extendedClass;
+        return $this;
+    }
+
+    public function setNamespace(?string $namespace)
+    {
+        $this->namespace = $namespace;
         return $this;
     }
 }

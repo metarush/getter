@@ -73,4 +73,27 @@ class GeneratorTest extends TestCase
 
         \unlink($location . $className . '.php');
     }
+
+    public function testGenerateWithNamespace()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'EnvTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('yaml')
+            ->setClassName($className)
+            ->setExtendedClass('ExtendMe')
+            ->setNamespace('Foo\Bar')
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.yaml')
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        $classContent = \file_get_contents($location . $className . '.php');
+
+        $this->assertStringContainsString('namespace Foo\Bar;', $classContent);
+
+        \unlink($location . $className . '.php');
+    }
 }
