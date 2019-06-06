@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.1 - 2019-06-06
+
+### Fixed
+
+- Fix changes not reflected in previous version.
+
 ## 1.1.0 - 2019-06-06
 
 ### Added
