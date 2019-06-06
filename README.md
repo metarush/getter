@@ -14,7 +14,7 @@ The generated class will be saved in `/foo/` folder.
 
 ### via CLI
 
-`vendor/metarush/getter/bin/generate yaml MyNewClass /foo/sample.yaml /foo/`
+`vendor/metarush/getter/bin/generate yaml MyNewClass /foo/sample.yaml /foo/ OptionalClassToExtend`
 
 ### via PHP script
 
@@ -22,9 +22,9 @@ The generated class will be saved in `/foo/` folder.
 (new \MetaRush\Getter\Generator)
     ->setAdapter('yaml')
     ->setClassName('MyNewClass')
-    ->setExtendedClass('ClassToExtend') // optional
     ->setLocation('/foo/')
     ->setSourceFile('/foo/sample.yaml')
+    ->setExtendedClass('OptionalClassToExtend') // optional
     ->generate();
 ```
 

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-list($script, $adapter, $className, $source, $location) = $argv;
+list($script, $adapter, $className, $source, $location, $extendedClass) = $argv;
 
 (new \MetaRush\Getter\Generator)
     ->setAdapter($adapter)
     ->setClassName($className)
     ->setLocation($location)
     ->setSourceFile($source)
+    ->setExtendedClass($extendedClass)
     ->generate();
