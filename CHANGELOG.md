@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.2 - 2019-06-06
+
+### Fixed
+
+- Add setExtendedClass() functionality (5th parameter) in generate CLI script
+
 ## 1.1.1 - 2019-06-06
 
 ### Fixed
