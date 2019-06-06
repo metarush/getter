@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.3 - 2019-06-06
+
+### Fixed
+
+- Fix autoloading issue in CLI script "generate"
+
 ## 1.1.2 - 2019-06-06
 
 ### Fixed
