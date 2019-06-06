@@ -24,7 +24,7 @@ class GeneratorTest extends TestCase
         \unlink($location . $className . '.php');
     }
 
-    public function testGenerateClassFromYamlEnvFile()
+    public function testGenerateClassFromEnvFile()
     {
         $location = __DIR__ . '/samples/';
         $className = 'EnvTest';
@@ -54,5 +54,23 @@ class GeneratorTest extends TestCase
             ->setLocation($location)
             ->setSourceFile($location . 'sample.env')
             ->generate();
+    }
+
+    public function testGenerateWithExtendedClass()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'EnvTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('yaml')
+            ->setClassName($className)
+            ->setExtendedClass('ExtendMe')
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.yaml')
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        \unlink($location . $className . '.php');
     }
 }

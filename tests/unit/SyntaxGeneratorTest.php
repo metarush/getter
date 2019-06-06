@@ -107,6 +107,19 @@ class SyntaxGeneratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function testClassSyntaxWithExtendedClass()
+    {
+        $a = [
+            'stringVar' => 'foo',
+        ];
+
+        $expected = 'class MyClass extends BaseClass{    private $stringVar = \'foo\';    public function getStringVar(): string    {        return $this->stringVar;    }}';
+
+        $s = $this->sG->classSyntax('MyClass', $a, 'BaseClass');
+        $actual = \str_replace("\n", '', $s);
+        $this->assertEquals($expected, $actual);
+    }
+
     public function testVarValueSyntax()
     {
         $value = [1, 'foo', true, [2.5, ['bar', false, 'qux']]];

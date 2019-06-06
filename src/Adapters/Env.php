@@ -9,25 +9,25 @@ use MetaRush\Getter;
 class Env extends Getter\AbstractFileGenerator
 {
 
-    public function __construct(Getter\SyntaxGenerator $syntaxGenerator)
+    public function __construct(Getter\FileGeneratorConfig $cfg, Getter\SyntaxGenerator $syntaxGenerator)
     {
-        parent::__construct($syntaxGenerator);
+        parent::__construct($cfg, $syntaxGenerator);
     }
 
     /**
      * Generate class file
      *
-     * @param string $className
      * @param string $envFile
-     * @param string $location Where to save the generated file
      * @return void
      */
-    public function generate(string $className, string $envFile, string $location): void
+    public function generate(string $envFile): void
     {
-        $envContents = file_get_contents($envFile);
+        $envContents = \file_get_contents($envFile);
 
         $array = \M1\Env\Parser::parse($envContents);
 
-        $this->generateClassFile($className, $array, $location);
+        $this->cfg->setData($array);
+
+        $this->generateClassFile();
     }
 }

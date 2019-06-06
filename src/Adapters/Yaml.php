@@ -9,23 +9,23 @@ use MetaRush\Getter;
 class Yaml extends Getter\AbstractFileGenerator
 {
 
-    public function __construct(Getter\SyntaxGenerator $syntaxGenerator)
+    public function __construct(Getter\FileGeneratorConfig $cfg, Getter\SyntaxGenerator $syntaxGenerator)
     {
-        parent::__construct($syntaxGenerator);
+        parent::__construct($cfg, $syntaxGenerator);
     }
 
     /**
      * Generate class file
      *
-     * @param string $className
      * @param string $yamlFile
-     * @param string $location Where to save the generated file
      * @return void
      */
-    public function generate(string $className, string $yamlFile, string $location): void
+    public function generate(string $yamlFile): void
     {
-        $data = \Symfony\Component\Yaml\Yaml::parseFile($yamlFile);
+        $array = \Symfony\Component\Yaml\Yaml::parseFile($yamlFile);
 
-        $this->generateClassFile($className, $data, $location);
+        $this->cfg->setData($array);
+
+        $this->generateClassFile();
     }
 }

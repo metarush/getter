@@ -22,6 +22,7 @@ The generated class will be saved in `/foo/` folder.
 (new \MetaRush\Getter\Generator)
     ->setAdapter('yaml')
     ->setClassName('MyNewClass')
+    ->setExtendedClass('ClassToExtend') // optional
     ->setLocation('/foo/')
     ->setSourceFile('/foo/sample.yaml')
     ->generate();

@@ -4,21 +4,8 @@ declare(strict_types=1);
 
 namespace MetaRush\Getter;
 
-class Config
+class FileGeneratorConfig
 {
-    /**
-     *
-     * @var string
-     */
-    private $adapter;
-
-    /**
-     * Source file where class will be generated from
-     *
-     * @var string
-     */
-    private $sourceFile;
-
     /**
      * Name of class to generate
      *
@@ -27,25 +14,27 @@ class Config
     private $className;
 
     /**
-     * Optional name of class to extend
-     *
-     * @var string
-     */
-    private $extendedClass;
-
-    /**
      * Where to store the generate class
      *
      * @var string
      */
     private $location;
 
-    public function getAdapter(): string
-    {
-        return $this->adapter;
-    }
+    /**
+     * Array of data to generated from
+     *
+     * @var array
+     */
+    private $data;
 
-    public function getClassName(): string
+    /**
+     * Optional name of class to extend from
+     *
+     * @var string
+     */
+    private $extendedClass;
+
+    public function getClassName(): ?string
     {
         return $this->className;
     }
@@ -55,9 +44,9 @@ class Config
         return $this->location;
     }
 
-    public function getSourceFile(): string
+    public function getData(): array
     {
-        return $this->sourceFile;
+        return $this->data;
     }
 
     public function getExtendedClass(): ?string
@@ -65,13 +54,7 @@ class Config
         return $this->extendedClass;
     }
 
-    public function setAdapter(string $adapter)
-    {
-        $this->adapter = $adapter;
-        return $this;
-    }
-
-    public function setClassName(string $className)
+    public function setClassName(?string $className)
     {
         $this->className = $className;
         return $this;
@@ -83,9 +66,9 @@ class Config
         return $this;
     }
 
-    public function setSourceFile(string $sourceFile)
+    public function setData(array $data)
     {
-        $this->sourceFile = $sourceFile;
+        $this->data = $data;
         return $this;
     }
 

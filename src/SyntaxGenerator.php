@@ -14,8 +14,11 @@ class SyntaxGenerator
      * @param array $data
      * @return string
      */
-    public function classSyntax(string $className, array $data): string
+    public function classSyntax(string $className, array $data, ?string $classToExtend = null): string
     {
+        if ($classToExtend)
+            $className = $className . ' extends ' . $classToExtend;
+
         $s = 'class ' . $className . "\n";
         $s .= "{\n";
 

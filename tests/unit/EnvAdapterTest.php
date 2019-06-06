@@ -6,13 +6,16 @@ use PHPUnit\Framework\TestCase;
 
 class EnvAdapterTest extends TestCase
 {
+    private $cfg;
     private $fileGenerator;
 
     public function setUp(): void
     {
+        $this->cfg = new \MetaRush\Getter\FileGeneratorConfig;
+
         $syntaxGenerator = new \MetaRush\Getter\SyntaxGenerator;
 
-        $this->fileGenerator = new \MetaRush\Getter\Adapters\Env($syntaxGenerator);
+        $this->fileGenerator = new \MetaRush\Getter\Adapters\Env($this->cfg, $syntaxGenerator);
     }
 
     public function testGenerateClassFile()
@@ -20,7 +23,10 @@ class EnvAdapterTest extends TestCase
         $location = __DIR__ . '/samples/';
         $envFile = $location . 'sample.env';
 
-        $this->fileGenerator->generate('FooEnv', $envFile, $location);
+        $this->cfg->setClassName('FooEnv');
+        $this->cfg->setLocation($location);
+
+        $this->fileGenerator->generate($envFile);
 
         $this->assertFileExists($location . 'FooEnv.php');
 
