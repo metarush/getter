@@ -9,7 +9,7 @@ use MetaRush\Getter;
 class Env extends Getter\AbstractFileGenerator
 {
 
-    public function __construct(Getter\FileGeneratorConfig $cfg, Getter\SyntaxGenerator $syntaxGenerator)
+    public function __construct(Getter\Config $cfg, Getter\SyntaxGenerator $syntaxGenerator)
     {
         parent::__construct($cfg, $syntaxGenerator);
     }

@@ -41,6 +41,13 @@ class Config
     private $location;
 
     /**
+     * Array of data to generated from
+     *
+     * @var array
+     */
+    private $data;
+
+    /**
      * Namespace of the generated class
      *
      * @var string
@@ -70,6 +77,11 @@ class Config
     public function getExtendedClass(): ?string
     {
         return $this->extendedClass;
+    }
+
+    public function getData(): array
+    {
+        return $this->data;
     }
 
     public function getNamespace(): ?string
@@ -104,6 +116,12 @@ class Config
     public function setExtendedClass(?string $extendedClass)
     {
         $this->extendedClass = $extendedClass;
+        return $this;
+    }
+
+    public function setData(array $data)
+    {
+        $this->data = $data;
         return $this;
     }
 

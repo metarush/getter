@@ -11,7 +11,7 @@ class EnvAdapterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->cfg = new \MetaRush\Getter\FileGeneratorConfig;
+        $this->cfg = new \MetaRush\Getter\Config;
 
         $syntaxGenerator = new \MetaRush\Getter\SyntaxGenerator;
 

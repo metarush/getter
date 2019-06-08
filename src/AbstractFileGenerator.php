@@ -13,7 +13,7 @@ abstract class AbstractFileGenerator
     protected $cfg;
     private $syntaxGenerator;
 
-    public function __construct(FileGeneratorConfig $cfg, SyntaxGenerator $syntaxGenerator)
+    public function __construct(Config $cfg, SyntaxGenerator $syntaxGenerator)
     {
         $this->cfg = $cfg;
         $this->syntaxGenerator = $syntaxGenerator;

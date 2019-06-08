@@ -18,19 +18,13 @@ class Generator extends Config
         if (!$this->validAdapter($this->getAdapter()))
             throw new Exception('Invalid adapter ' . $this->getAdapter());
 
-        $fgCfg = new FileGeneratorConfig;
         $syntaxGenerator = new SyntaxGenerator;
 
-        $fgCfg->setClassName($this->getClassName());
-        $fgCfg->setLocation($this->getLocation());
-        $fgCfg->setExtendedClass($this->getExtendedClass());
-        $fgCfg->setNamespace($this->getNamespace());
-
         if ($this->getAdapter() === 'yaml') {
-            $generator = new Adapters\Yaml($fgCfg, $syntaxGenerator);
+            $generator = new Adapters\Yaml($this, $syntaxGenerator);
             $generator->generate($this->getSourceFile());
         } elseif ($this->getAdapter() === 'env') {
-            $generator = new Adapters\Env($fgCfg, $syntaxGenerator);
+            $generator = new Adapters\Env($this, $syntaxGenerator);
             $generator->generate($this->getSourceFile());
         }
     }
