@@ -7,6 +7,7 @@ namespace MetaRush\Getter;
 class Config
 {
     /**
+     * Type of adapter to use
      *
      * @var string
      */
@@ -54,6 +55,13 @@ class Config
      */
     private $namespace;
 
+    /**
+     * Convert data values to dummy data. Useful for hiding sensitive data that can later be repopulated on runtime.
+     *
+     * @var bool
+     */
+    private $dummifyValues;
+
     public function getAdapter(): string
     {
         return $this->adapter;
@@ -87,6 +95,11 @@ class Config
     public function getNamespace(): ?string
     {
         return $this->namespace;
+    }
+
+    public function getDummifyValues(): ?bool
+    {
+        return $this->dummifyValues;
     }
 
     public function setAdapter(string $adapter)
@@ -128,6 +141,12 @@ class Config
     public function setNamespace(?string $namespace)
     {
         $this->namespace = $namespace;
+        return $this;
+    }
+
+    public function setDummifyValues(bool $dummifyValues)
+    {
+        $this->dummifyValues = $dummifyValues;
         return $this;
     }
 }

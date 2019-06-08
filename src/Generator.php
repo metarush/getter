@@ -18,7 +18,7 @@ class Generator extends Config
         if (!$this->validAdapter($this->getAdapter()))
             throw new Exception('Invalid adapter ' . $this->getAdapter());
 
-        $syntaxGenerator = new SyntaxGenerator;
+        $syntaxGenerator = new SyntaxGenerator($this);
 
         if ($this->getAdapter() === 'yaml') {
             $generator = new Adapters\Yaml($this, $syntaxGenerator);

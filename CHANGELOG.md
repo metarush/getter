@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.1.0 - 2019-06-08
+
+### Added
+
+- Add setDummifyValues() config method
+
 ## 2.0.1 - 2019-06-07
 
 ### Fixed

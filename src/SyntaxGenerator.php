@@ -6,16 +6,24 @@ namespace MetaRush\Getter;
 
 class SyntaxGenerator
 {
+    private $cfg;
+
+    public function __construct(Config $cfg)
+    {
+        $this->cfg = $cfg;
+    }
 
     /**
      * Get class syntax
      *
-     * @param string $className
-     * @param array $data
      * @return string
      */
-    public function classSyntax(string $className, array $data, ?string $classToExtend = null): string
+    public function classSyntax(): string
     {
+        $className = $this->cfg->getClassName();
+        $data = $this->cfg->getData();
+        $classToExtend = $this->cfg->getExtendedClass();
+
         if ($classToExtend)
             $className = $className . ' extends ' . $classToExtend;
 
@@ -137,6 +145,9 @@ class SyntaxGenerator
     {
         $type = $this->getType($value);
 
+        if ($this->cfg->getDummifyValues())
+            $value = $this->dummifyValue($value);
+
         if ($type == 'string')
             $s = "'{$value}'";
         elseif ($type == 'int')
@@ -149,5 +160,27 @@ class SyntaxGenerator
             $s = $this->arraySyntax($value);
 
         return $s;
+    }
+
+    /**
+     * Convert $value to dummy value but retain its type
+     *
+     * @param mixed $value
+     * @return boolean|string|float|int|array
+     */
+    public function dummifyValue($value)
+    {
+        $type = $this->getType($value);
+
+        if ($type == 'string')
+            return 'x';
+        if ($type == 'int')
+            return 1;
+        if ($type == 'float')
+            return 1.2;
+        if ($type == 'bool')
+            return true;
+        if ($type == 'array')
+            return ['x'];
     }
 }

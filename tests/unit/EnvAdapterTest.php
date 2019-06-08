@@ -13,7 +13,7 @@ class EnvAdapterTest extends TestCase
     {
         $this->cfg = new \MetaRush\Getter\Config;
 
-        $syntaxGenerator = new \MetaRush\Getter\SyntaxGenerator;
+        $syntaxGenerator = new \MetaRush\Getter\SyntaxGenerator($this->cfg);
 
         $this->fileGenerator = new \MetaRush\Getter\Adapters\Env($this->cfg, $syntaxGenerator);
     }

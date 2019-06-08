@@ -96,4 +96,37 @@ class GeneratorTest extends TestCase
 
         \unlink($location . $className . '.php');
     }
+
+    public function testGeneratedWithDummyData()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'DummyTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('yaml')
+            ->setClassName($className)
+            ->setExtendedClass('ExtendMe')
+            ->setNamespace('Foo\Bar')
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.yaml')
+            ->setDummifyValues(true)
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        $classContent = \file_get_contents($location . $className . '.php');
+
+        $expectedValues = [
+            '$stringVar = \'x\'',
+            '$intVar = 1;',
+            '$floatVar = 1.2',
+            '$boolVar = true;',
+            '$arrayVar = [\'x\'];'
+        ];
+
+        foreach ($expectedValues as $v)
+            $this->assertStringContainsString($v, $classContent);
+
+        \unlink($location . $className . '.php');
+    }
 }

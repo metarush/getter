@@ -99,3 +99,26 @@ class MyNewClass extends OptionalClassToExtend
 
 - yaml
 - env
+
+## Dummify field values
+
+If you like to dummify field values, use the `->setDummifyValues(true)` config method or add `dummify` as 7th parameter in the CLI script
+
+### Why dummify?
+
+It's useful for hiding sensitive data such as credentials.
+They should not be hard-coded in the source code.
+The field values of the generated classes with dummy data can later be repopulated (by your custom scripts) on runtime with actual values.
+The generated class retains the data types even if the original values have been dummified.
+
+If dummified, the generated field values are as follows:
+
+```php
+[
+    'x', // string
+    1, // int
+    1.2, // float
+    true, // true
+    ['x'] // array
+];
+```
