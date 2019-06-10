@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.1 - 2019-06-11
+
+### Fixed
+
+- Fix changes not applied in previous version
+
 ## 3.0.0 - 2019-06-10
 
 ### Added
