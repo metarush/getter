@@ -6,6 +6,11 @@ namespace MetaRush\Getter;
 
 class Config
 {
+
+    const CONSTRUCTOR_CALL_PARENT = 1;
+    const CONSTRUCTOR_DATA_REPLACER = 2;
+    const CONSTRUCTOR_BOTH = 3;
+
     /**
      * Type of adapter to use
      *
@@ -61,6 +66,13 @@ class Config
      * @var bool
      */
     private $dummifyValues;
+
+    /**
+     * Type of constructor to use: CONSTRUCTOR_CALL_PARENT | CONSTRUCTOR_DATA_REPLACER | CONSTRUCTOR_BOTH
+     *
+     * @var int
+     */
+    private $constructorType;
 
     public function getAdapter(): string
     {
@@ -147,6 +159,17 @@ class Config
     public function setDummifyValues(bool $dummifyValues)
     {
         $this->dummifyValues = $dummifyValues;
+        return $this;
+    }
+
+    public function getConstructorType(): ?int
+    {
+        return $this->constructorType;
+    }
+
+    public function setConstructorType(int $constructorType)
+    {
+        $this->constructorType = $constructorType;
         return $this;
     }
 }

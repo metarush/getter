@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class SyntaxGeneratorTest extends TestCase
 {
+
     private $sG;
     private $cfg;
 
@@ -110,6 +111,7 @@ class SyntaxGeneratorTest extends TestCase
 
         $s = $this->sG->classSyntax();
         $actual = \str_replace("\n", '', $s);
+
         $this->assertEquals($expected, $actual);
     }
 
@@ -127,6 +129,7 @@ class SyntaxGeneratorTest extends TestCase
 
         $s = $this->sG->classSyntax();
         $actual = \str_replace("\n", '', $s);
+
         $this->assertEquals($expected, $actual);
     }
 
@@ -177,16 +180,42 @@ class SyntaxGeneratorTest extends TestCase
     {
         $data = [
             'stringVar' => 'foo',
+            'arrayVar'  => ['bar']
         ];
 
         $this->cfg->setClassName('MyClass');
         $this->cfg->setData($data);
         $this->cfg->setDummifyValues(true);
 
-        $expected = 'class MyClass{    private $stringVar = \'x\';    public function getStringVar(): string    {        return $this->stringVar;    }}';
+        $expected = 'class MyClass{    private $stringVar = \'x\';    private $arrayVar = [\'x\'];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
 
         $s = $this->sG->classSyntax();
         $actual = \str_replace("\n", '', $s);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testConstructorSntaxWithDataReplacer()
+    {
+        $expected = '    public function __construct(array $actualData)    {        $classVars = \get_class_vars(__CLASS__);        foreach ($classVars as $k => $v)            $this->$k = $actualData[$k] ?? null;    }';
+        $s = $this->sG->constructorWithDataReplacerSyntax(false);
+        $actual = \str_replace("\n", '', $s);
+        $this->assertEquals($expected, $actual);
+
+        $expected = '    public function __construct(array $actualData)    {        parent::__construct($actualData);        $classVars = \get_class_vars(__CLASS__);        foreach ($classVars as $k => $v)            $this->$k = $actualData[$k] ?? null;    }';
+        $s = $this->sG->constructorWithDataReplacerSyntax(true);
+        $actual = \str_replace("\n", '', $s);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testConstructorSntaxWithCallParent()
+    {
+        $expected = '    public function __construct(array $actualData)    {        parent::__construct($actualData);    }';
+
+        $s = $this->sG->constructorWithCallParentSyntax();
+
+        $actual = \str_replace("\n", '', $s);
+
         $this->assertEquals($expected, $actual);
     }
 }

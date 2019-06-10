@@ -14,7 +14,7 @@ The generated class will be saved in `foo/` folder.
 
 ### via CLI
 
-`vendor/metarush/getter/bin/generate yaml MyNewClass foo/sample.yaml foo/ MyNamespace OptionalClassToExtend`
+`vendor/metarush/getter/bin/generate -a yaml -c MyNewClass -s tests/unit/samples/sample.yaml -l foo/`
 
 ### via PHP script
 
@@ -22,10 +22,8 @@ The generated class will be saved in `foo/` folder.
 (new \MetaRush\Getter\Generator)
     ->setAdapter('yaml')
     ->setClassName('MyNewClass')
-    ->setLocation('foo/')
     ->setSourceFile('foo/sample.yaml')
-    ->setNamespace('MyNamespace')
-    ->setExtendedClass('OptionalClassToExtend') // optional
+    ->setLocation('foo/')
     ->generate();
 ```
 
@@ -52,7 +50,7 @@ declare(strict_types=1);
 
 namespace MyNamespace;
 
-class MyNewClass extends OptionalClassToExtend
+class MyNewClass
 {
     private $stringVar = 'foo';
     private $intVar = 9;
@@ -100,15 +98,25 @@ class MyNewClass extends OptionalClassToExtend
 - yaml
 - env
 
-## Dummify field values
+## Advanced usage
 
-If you like to dummify field values, use the `->setDummifyValues(true)` config method or add `dummify` as 7th parameter in the CLI script
+### Include namespace
 
-### Why dummify?
+If you want to include a namespace use `->setNamespace('MyNamespace')` or via CLI `--namespace MyNamespace`
+
+### Extend class
+
+If you want to extend a class use `->setExtendedClass('MyBaseClass')` or via CLI `--extendClass MyBaseClass`
+
+### Dummify field values
+
+If you want to dummify field values, use the `->setDummifyValues(true)` config method or via CLI `--dummify`
+
+#### Why dummify?
 
 It's useful for hiding sensitive data such as credentials.
-They should not be hard-coded in the source code.
-The field values of the generated classes with dummy data can later be repopulated (by your custom scripts) on runtime with actual values.
+Credentials should not be in the source code.
+The field values of the generated classes with dummy data can later be repopulated (by your custom scripts) on runtime with actual values (see data replacer below).
 The generated class retains the data types even if the original values have been dummified.
 
 If dummified, the generated field values are as follows:
@@ -122,3 +130,26 @@ If dummified, the generated field values are as follows:
     ['x'] // array
 ];
 ```
+
+### Data replacer for dummified values
+
+If you want to dynamically change the values of the dummified data on runtime use  `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_DATA_REPLACER);` or via CLI `--dataReplacer`
+
+You can then call the generated class and inject an array of replacement values on runtime:
+
+```php
+
+// $replacementValues should contain key value pair that matches the dummified data
+
+$newClass = new MyNewClass($replacementValues);
+```
+
+### Call parent
+
+If you want to call a parent class use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_CALL_PARENT)` or via CLI `--callParent`
+
+### Call parent and use data replacer
+
+If you want to call a parent class and also use data replacer, use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_BOTH)` or via CLI `--callParent --dataReplacer`
+
+Note: You should only call `->setConstructorType()` once

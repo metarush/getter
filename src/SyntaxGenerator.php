@@ -6,6 +6,7 @@ namespace MetaRush\Getter;
 
 class SyntaxGenerator
 {
+
     private $cfg;
 
     public function __construct(Config $cfg)
@@ -23,6 +24,7 @@ class SyntaxGenerator
         $className = $this->cfg->getClassName();
         $data = $this->cfg->getData();
         $classToExtend = $this->cfg->getExtendedClass();
+        $constructorType = $this->cfg->getConstructorType();
 
         if ($classToExtend)
             $className = $className . ' extends ' . $classToExtend;
@@ -34,6 +36,15 @@ class SyntaxGenerator
             $s .= $this->fieldSyntax($k, $v);
 
         $s .= "\n";
+
+        if ($constructorType) {
+            if ($constructorType === Config::CONSTRUCTOR_CALL_PARENT)
+                $s .= $this->constructorWithCallParentSyntax();
+            elseif ($constructorType === Config::CONSTRUCTOR_DATA_REPLACER)
+                $s .= $this->constructorWithDataReplacerSyntax(false);
+            elseif ($constructorType === Config::CONSTRUCTOR_BOTH)
+                $s .= $this->constructorWithDataReplacerSyntax(true);
+        }
 
         foreach ($data as $k => $v) {
             $type = $this->getType($v);
@@ -173,14 +184,52 @@ class SyntaxGenerator
         $type = $this->getType($value);
 
         if ($type == 'string')
-            return 'x';
-        if ($type == 'int')
-            return 1;
-        if ($type == 'float')
-            return 1.2;
-        if ($type == 'bool')
-            return true;
-        if ($type == 'array')
-            return ['x'];
+            $v = 'x';
+        elseif ($type == 'int')
+            $v = 1;
+        elseif ($type == 'float')
+            $v = 1.2;
+        elseif ($type == 'bool')
+            $v = true;
+        elseif ($type == 'array')
+            $v = ['x'];
+
+        return $v;
+    }
+
+    /**
+     * Get constructor with data replacer syntax
+     *
+     * @param bool $callParent
+     * @return string
+     */
+    public function constructorWithDataReplacerSyntax(bool $callParent): string
+    {
+        $callParent = $callParent ? '        parent::__construct($actualData);' . "\n\n" : null;
+
+        $s = '    public function __construct(array $actualData)' . "\n";
+        $s .= '    {' . "\n";
+        $s .= $callParent;
+        $s .= '        $classVars = \get_class_vars(__CLASS__);' . "\n\n";
+        $s .= '        foreach ($classVars as $k => $v)' . "\n";
+        $s .= '            $this->$k = $actualData[$k] ?? null;' . "\n";
+        $s .= '    }' . "\n\n";
+
+        return $s;
+    }
+
+    /**
+     * Get constructor with call parent syntax
+     *
+     * @return string
+     */
+    public function constructorWithCallParentSyntax()
+    {
+        $s = '    public function __construct(array $actualData)' . "\n";
+        $s .= '    {' . "\n";
+        $s .= '        parent::__construct($actualData);' . "\n";
+        $s .= '    }' . "\n\n";
+
+        return $s;
     }
 }

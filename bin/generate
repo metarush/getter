@@ -9,16 +9,51 @@ foreach ([__DIR__ . '/../../../../vendor/autoload.php', __DIR__ . '/../vendor/au
   }
 }
 
-list($script, $adapter, $className, $source, $location, $namespace, $extendedClass, $dummify) = $argv;
+$shortOpts = 'a:'; // adapter
+$shortOpts .= 'c:'; // class name
+$shortOpts .= 's:'; // source
+$shortOpts .= 'l:'; // location where to save class
 
-$dummify = ($dummify === 'dummify') ? true : false;
+$longOpts = [
+    'namespace:', // namespace (optional)
+    'extendClass:', // class to extend (optional)
+    'dummify', // dummify values
+    'callParent', // include constructor with call parent
+    'dataReplacer', // include constructor with data replacer
+];
 
-(new \MetaRush\Getter\Generator)
-    ->setAdapter($adapter)
-    ->setClassName($className)
-    ->setLocation($location)
-    ->setSourceFile($source)
-    ->setNamespace($namespace)
-    ->setExtendedClass($extendedClass)
-    ->setDummifyValues($dummify)
-    ->generate();
+$opts = \getopt($shortOpts, $longOpts);
+
+// set required config
+$generator = (new \MetaRush\Getter\Generator)
+    ->setAdapter($opts['a'])
+    ->setClassName($opts['c'])
+    ->setSourceFile($opts['s'])
+    ->setLocation($opts['l']);
+
+// optionally include namespace
+if (isset($opts['namespace']))
+    $generator->setNamespace($opts['namespace']);
+
+// optionally extend class
+if (isset($opts['extendClass']))
+    $generator->setExtendedClass($opts['extendClass']);
+
+// optionally dummify values
+if (isset($opts['dummify']))
+    $generator->setDummifyValues(true);
+
+// determine constructor type if any
+if (isset($opts['callParent']) && !isset($opts['dataReplacer']))
+    $constructorType = \MetaRush\Getter\Config::CONSTRUCTOR_CALL_PARENT;
+elseif (!isset($opts['callParent']) && isset($opts['dataReplacer']))
+    $constructorType = \MetaRush\Getter\Config::CONSTRUCTOR_DATA_REPLACER;
+elseif (isset($opts['callParent']) && isset($opts['dataReplacer']))
+    $constructorType = \MetaRush\Getter\Config::CONSTRUCTOR_BOTH;
+
+// optionally constructor type if any
+if (isset($opts['callParent']) OR isset($opts['dataReplacer']))
+    $generator->setConstructorType($constructorType);
+
+// finally generate class
+$generator->generate();

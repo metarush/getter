@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 3.0.0 - 2019-06-10
+
+### Added
+
+- Add setConstructorType() config method
+
+### Changed
+
+- Improve CLI parameter settings
+
 ## 2.1.0 - 2019-06-08
 
 ### Added

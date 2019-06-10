@@ -97,7 +97,7 @@ class GeneratorTest extends TestCase
         \unlink($location . $className . '.php');
     }
 
-    public function testGeneratedWithDummyData()
+    public function testGenerateWithDummifiedData()
     {
         $location = __DIR__ . '/samples/';
         $className = 'DummyTest';
@@ -126,6 +126,81 @@ class GeneratorTest extends TestCase
 
         foreach ($expectedValues as $v)
             $this->assertStringContainsString($v, $classContent);
+
+        \unlink($location . $className . '.php');
+    }
+
+    public function testGenerateWithCallParentConstructor()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'ConstructorTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('yaml')
+            ->setClassName($className)
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.yaml')
+            ->setConstructorType(MetaRush\Getter\Config::CONSTRUCTOR_CALL_PARENT)
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        $classContent = \file_get_contents($location . $className . '.php');
+
+        $this->assertStringContainsString('public function __construct(array $actualData)', $classContent);
+        $this->assertStringContainsString('parent::__construct($actualData);', $classContent);
+
+        \unlink($location . $className . '.php');
+    }
+
+    public function testGenerateWithDataReplacerConstructor()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'ConstructorTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('yaml')
+            ->setClassName($className)
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.yaml')
+            ->setConstructorType(MetaRush\Getter\Config::CONSTRUCTOR_DATA_REPLACER)
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        $classContent = \file_get_contents($location . $className . '.php');
+
+        $this->assertStringContainsString('public function __construct(array $actualData)', $classContent);
+        $this->assertStringContainsString('$classVars = \get_class_vars(__CLASS__);', $classContent);
+        $this->assertStringContainsString('foreach ($classVars as $k => $v)', $classContent);
+        $this->assertStringContainsString('$this->$k = $actualData[$k] ?? null;', $classContent);
+
+
+        \unlink($location . $className . '.php');
+    }
+
+    public function testGenerateWithCallParendAndDataReplacerConstructor()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'ConstructorTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('yaml')
+            ->setClassName($className)
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.yaml')
+            ->setConstructorType(MetaRush\Getter\Config::CONSTRUCTOR_BOTH)
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        $classContent = \file_get_contents($location . $className . '.php');
+
+        $this->assertStringContainsString('public function __construct(array $actualData)', $classContent);
+        $this->assertStringContainsString('parent::__construct($actualData);', $classContent);
+        $this->assertStringContainsString('$classVars = \get_class_vars(__CLASS__);', $classContent);
+        $this->assertStringContainsString('foreach ($classVars as $k => $v)', $classContent);
+        $this->assertStringContainsString('$this->$k = $actualData[$k] ?? null;', $classContent);
 
         \unlink($location . $className . '.php');
     }
