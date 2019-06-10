@@ -204,4 +204,30 @@ class GeneratorTest extends TestCase
 
         \unlink($location . $className . '.php');
     }
+
+    public function testGenerateAsConstants()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'ConstantsTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('yaml')
+            ->setClassName($className)
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.yaml')
+            ->setGenerateAsConstants(true)
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        $classContent = \file_get_contents($location . $className . '.php');
+
+        $this->assertStringContainsString('const stringVar = \'foo\';', $classContent);
+        $this->assertStringContainsString('const intVar = 9;', $classContent);
+        $this->assertStringContainsString('const floatVar = 2.1;', $classContent);
+        $this->assertStringContainsString('const boolVar = true;', $classContent);
+        $this->assertStringContainsString('const arrayVar = [\'foo\', 1.3];', $classContent);
+
+        \unlink($location . $className . '.php');
+    }
 }

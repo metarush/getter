@@ -102,11 +102,11 @@ class MyNewClass
 
 ### Include namespace
 
-If you want to include a namespace use `->setNamespace('MyNamespace')` or via CLI `--namespace MyNamespace`
+If you want to include a namespace, use `->setNamespace('MyNamespace')` or via CLI `--namespace MyNamespace`
 
 ### Extend class
 
-If you want to extend a class use `->setExtendedClass('MyBaseClass')` or via CLI `--extendClass MyBaseClass`
+If you want to extend a class, use `->setExtendedClass('MyBaseClass')` or via CLI `--extendClass MyBaseClass`
 
 ### Dummify field values
 
@@ -133,7 +133,7 @@ If dummified, the generated field values are as follows:
 
 ### Data replacer for dummified values
 
-If you want to dynamically change the values of the dummified data on runtime use  `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_DATA_REPLACER);` or via CLI `--dataReplacer`
+If you want to dynamically change the values of the dummified data on runtime, use  `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_DATA_REPLACER);` or via CLI `--dataReplacer`
 
 You can then call the generated class and inject an array of replacement values on runtime:
 
@@ -146,10 +146,15 @@ $newClass = new MyNewClass($replacementValues);
 
 ### Call parent
 
-If you want to call a parent class use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_CALL_PARENT)` or via CLI `--callParent`
+If you want to call a parent class, use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_CALL_PARENT)` or via CLI `--callParent`
 
 ### Call parent and use data replacer
 
 If you want to call a parent class and also use data replacer, use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_BOTH)` or via CLI `--callParent --dataReplacer`
 
 Note: You should only call `->setConstructorType()` once
+
+### Generate constants
+
+If you want to generate the key/value pairs as constants, use `->setGenerateAsConstants(true)` or via CLI `--constants`.
+Note that the getter methods won't be generated anymore if you set this.

@@ -57,23 +57,26 @@ class SyntaxGeneratorTest extends TestCase
         // test string
         $expected = "    private \$foo = 'bar';\n";
         $actual = $this->sG->fieldSyntax('foo', 'bar');
+        $this->assertEquals($expected, $actual);
 
         // test int
         $expected = "    private \$foo = 9;\n";
         $actual = $this->sG->fieldSyntax('foo', 9);
+        $this->assertEquals($expected, $actual);
 
         // test float
         $expected = "    private \$foo = 1.2;\n";
         $actual = $this->sG->fieldSyntax('foo', 1.2);
+        $this->assertEquals($expected, $actual);
 
         // test bool
         $expected = "    private \$foo = false;\n";
         $actual = $this->sG->fieldSyntax('foo', false);
+        $this->assertEquals($expected, $actual);
 
         // tets array
         $expected = "    private \$foo = [1, 2, 3];\n";
         $actual = $this->sG->fieldSyntax('foo', [1, 2, 3]);
-
         $this->assertEquals($expected, $actual);
     }
 
@@ -216,6 +219,34 @@ class SyntaxGeneratorTest extends TestCase
 
         $actual = \str_replace("\n", '', $s);
 
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testConstantSyntax()
+    {
+        // test string
+        $expected = "    const foo = 'bar';\n";
+        $actual = $this->sG->constantSyntax('foo', 'bar');
+        $this->assertEquals($expected, $actual);
+
+        // test int
+        $expected = "    const foo = 9;\n";
+        $actual = $this->sG->constantSyntax('foo', 9);
+        $this->assertEquals($expected, $actual);
+
+        // test float
+        $expected = "    const foo = 1.2;\n";
+        $actual = $this->sG->constantSyntax('foo', 1.2);
+        $this->assertEquals($expected, $actual);
+
+        // test bool
+        $expected = "    const foo = false;\n";
+        $actual = $this->sG->constantSyntax('foo', false);
+        $this->assertEquals($expected, $actual);
+
+        // tets array
+        $expected = "    const foo = [1, ['bar', 1.2], 3];\n";
+        $actual = $this->sG->constantSyntax('foo', [1, ['bar', 1.2], 3]);
         $this->assertEquals($expected, $actual);
     }
 }

@@ -74,6 +74,13 @@ class Config
      */
     private $constructorType;
 
+    /**
+     * Generate key/values as constants
+     *
+     * @var bool
+     */
+    private $generateAsConstants;
+
     public function getAdapter(): string
     {
         return $this->adapter;
@@ -112,6 +119,11 @@ class Config
     public function getDummifyValues(): ?bool
     {
         return $this->dummifyValues;
+    }
+
+    public function getGenerateAsConstants(): ?bool
+    {
+        return $this->generateAsConstants;
     }
 
     public function setAdapter(string $adapter)
@@ -170,6 +182,12 @@ class Config
     public function setConstructorType(int $constructorType)
     {
         $this->constructorType = $constructorType;
+        return $this;
+    }
+
+    public function setGenerateAsConstants(bool $generateAsConstants)
+    {
+        $this->generateAsConstants = $generateAsConstants;
         return $this;
     }
 }

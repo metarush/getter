@@ -20,6 +20,7 @@ $longOpts = [
     'dummify', // dummify values
     'callParent', // include constructor with call parent
     'dataReplacer', // include constructor with data replacer
+    'constants', // generate the key/value pairs as contstants
 ];
 
 $opts = \getopt($shortOpts, $longOpts);
@@ -42,6 +43,10 @@ if (isset($opts['extendClass']))
 // optionally dummify values
 if (isset($opts['dummify']))
     $generator->setDummifyValues(true);
+
+// optionally set the key/value pairs as constants
+if (isset($opts['constants']))
+    $generator->setGenerateAsConstants(true);
 
 // determine constructor type if any
 if (isset($opts['callParent']) && !isset($opts['dataReplacer']))

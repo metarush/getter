@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.1.0 - 2019-06-11
+
+### Added
+
+- Add setGenerateAsConstants() config method and --constants CLI param
+
 ## 3.0.1 - 2019-06-11
 
 ### Fixed

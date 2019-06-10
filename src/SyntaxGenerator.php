@@ -32,10 +32,17 @@ class SyntaxGenerator
         $s = 'class ' . $className . "\n";
         $s .= "{\n";
 
-        foreach ($data as $k => $v)
-            $s .= $this->fieldSyntax($k, $v);
+        if ($this->cfg->getGenerateAsConstants()) {
+            foreach ($data as $k => $v)
+                $s .= $this->constantSyntax($k, $v);
+            $s .= "\n";
+        }
 
-        $s .= "\n";
+        if (!$this->cfg->getGenerateAsConstants()) {
+            foreach ($data as $k => $v)
+                $s .= $this->fieldSyntax($k, $v);
+            $s .= "\n";
+        }
 
         if ($constructorType) {
             if ($constructorType === Config::CONSTRUCTOR_CALL_PARENT)
@@ -46,9 +53,11 @@ class SyntaxGenerator
                 $s .= $this->constructorWithDataReplacerSyntax(true);
         }
 
-        foreach ($data as $k => $v) {
-            $type = $this->getType($v);
-            $s .= $this->propertySyntax($k, $type);
+        if (!$this->cfg->getGenerateAsConstants()) {
+            foreach ($data as $k => $v) {
+                $type = $this->getType($v);
+                $s .= $this->propertySyntax($k, $type);
+            }
         }
 
         $s .= "}\n";
@@ -147,7 +156,7 @@ class SyntaxGenerator
     }
 
     /**
-     * Get field value syntax
+     * Get field/constant value syntax
      *
      * @param type $value
      * @return type
@@ -231,5 +240,19 @@ class SyntaxGenerator
         $s .= '    }' . "\n\n";
 
         return $s;
+    }
+
+    /**
+     * Get class constant syntax
+     *
+     * @param string $constantName
+     * @param type $value
+     * @return string
+     */
+    public function constantSyntax(string $constantName, $value): string
+    {
+        $varValueSyntax = $this->varValueSyntax($value);
+
+        return '    const ' . $constantName . " = $varValueSyntax;\n";
     }
 }
