@@ -38,11 +38,9 @@ class SyntaxGenerator
             $s .= "\n";
         }
 
-        if (!$this->cfg->getGenerateAsConstants()) {
-            foreach ($data as $k => $v)
-                $s .= $this->fieldSyntax($k, $v);
-            $s .= "\n";
-        }
+        foreach ($data as $k => $v)
+            $s .= $this->fieldSyntax($k, $v);
+        $s .= "\n";
 
         if ($constructorType) {
             if ($constructorType === Config::CONSTRUCTOR_CALL_PARENT)
@@ -53,11 +51,9 @@ class SyntaxGenerator
                 $s .= $this->constructorWithDataReplacerSyntax(true);
         }
 
-        if (!$this->cfg->getGenerateAsConstants()) {
-            foreach ($data as $k => $v) {
-                $type = $this->getType($v);
-                $s .= $this->propertySyntax($k, $type);
-            }
+        foreach ($data as $k => $v) {
+            $type = $this->getType($v);
+            $s .= $this->propertySyntax($k, $type);
         }
 
         $s .= "}\n";

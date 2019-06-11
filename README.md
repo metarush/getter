@@ -157,4 +157,3 @@ Note: You should only call `->setConstructorType()` once
 ### Generate constants
 
 If you want to generate the key/value pairs as constants, use `->setGenerateAsConstants(true)` or via CLI `--constants`.
-Note that the getter methods won't be generated anymore if you set this.
