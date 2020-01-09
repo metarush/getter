@@ -56,7 +56,7 @@ class MyNewClass
     private $intVar = 9;
     private $floatVar = 2.1;
     private $boolVar = true;
-    private $arrayVar = ['foo', 1.3];
+    private $arrayVar = [0 => 'foo', 1 => 1.3];
 
     public function getStringVar(): string
     {
@@ -91,7 +91,7 @@ class MyNewClass
 - int
 - float
 - bool
-- array (not supported in `env` adapter)
+- array (only available in `yaml` adapter)
 
 ## Adapters
 
@@ -127,7 +127,7 @@ If dummified, the generated field values are as follows:
     1, // int
     1.2, // float
     true, // true
-    ['x'] // array
+    [0 => 'x'] // array
 ];
 ```
 

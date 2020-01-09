@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.2.0 - 2020-01-10
+
+### Added
+
+- Add support for associative arrays in YAML adapter
+
 ## 3.1.1 - 2019-06-12
 
 ### Fixed
