@@ -6,7 +6,6 @@ namespace MetaRush\Getter;
 
 class SyntaxGenerator
 {
-
     private $cfg;
 
     public function __construct(Config $cfg)
@@ -145,8 +144,8 @@ class SyntaxGenerator
     {
         $s = '[';
 
-        foreach ($a as $v)
-            $s .= $this->varValueSyntax($v) . ', ';
+        foreach ($a as $k => $v)
+            $s .= $k . ' => ' . $this->varValueSyntax($v) . ', ';
 
         return \trim($s, ', ') . ']';
     }

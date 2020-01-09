@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 class SyntaxGeneratorTest extends TestCase
 {
-
     private $sG;
     private $cfg;
 
@@ -75,7 +74,7 @@ class SyntaxGeneratorTest extends TestCase
         $this->assertEquals($expected, $actual);
 
         // tets array
-        $expected = "    private \$foo = [1, 2, 3];\n";
+        $expected = "    private \$foo = [0 => 1, 1 => 2, 2 => 3];\n";
         $actual = $this->sG->fieldSyntax('foo', [1, 2, 3]);
         $this->assertEquals($expected, $actual);
     }
@@ -110,7 +109,7 @@ class SyntaxGeneratorTest extends TestCase
         $this->cfg->setClassName('MyClass');
         $this->cfg->setData($data);
 
-        $expected = 'class MyClass{    private $stringVar = \'foo\';    private $intVar = 9;    private $floatVar = 1.2;    private $boolVar = true;    private $arrayVar = [1, 2];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getIntVar(): int    {        return $this->intVar;    }    public function getFloatVar(): float    {        return $this->floatVar;    }    public function getBoolVar(): bool    {        return $this->boolVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
+        $expected = 'class MyClass{    private $stringVar = \'foo\';    private $intVar = 9;    private $floatVar = 1.2;    private $boolVar = true;    private $arrayVar = [0 => 1, 1 => 2];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getIntVar(): int    {        return $this->intVar;    }    public function getFloatVar(): float    {        return $this->floatVar;    }    public function getBoolVar(): bool    {        return $this->boolVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
 
         $s = $this->sG->classSyntax();
         $actual = \str_replace("\n", '', $s);
@@ -140,16 +139,25 @@ class SyntaxGeneratorTest extends TestCase
     {
         $value = [1, 'foo', true, [2.5, ['bar', false, 'qux']]];
 
-        $expected = "[1, 'foo', true, [2.5, ['bar', false, 'qux']]]";
+        $expected = "[0 => 1, 1 => 'foo', 2 => true, 3 => [0 => 2.5, 1 => [0 => 'bar', 1 => false, 2 => 'qux']]]";
         $actual = $this->sG->varValueSyntax($value);
 
         $this->assertEquals($expected, $actual);
     }
 
-    public function testArraySyntax()
+    public function testSimpleArraySyntax()
     {
         $array = ['foo', false, 'bar', 1];
-        $expected = "['foo', false, 'bar', 1]";
+        $expected = "[0 => 'foo', 1 => false, 2 => 'bar', 3 => 1]";
+        $actual = $this->sG->arraySyntax($array);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testAssociativeArraySyntax()
+    {
+        $array = [7 => 'foo', 8 => false, 9 => 'bar'];
+        $expected = "[7 => 'foo', 8 => false, 9 => 'bar']";
         $actual = $this->sG->arraySyntax($array);
 
         $this->assertEquals($expected, $actual);
@@ -190,7 +198,7 @@ class SyntaxGeneratorTest extends TestCase
         $this->cfg->setData($data);
         $this->cfg->setDummifyValues(true);
 
-        $expected = 'class MyClass{    private $stringVar = \'x\';    private $arrayVar = [\'x\'];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
+        $expected = 'class MyClass{    private $stringVar = \'x\';    private $arrayVar = [0 => \'x\'];    public function getStringVar(): string    {        return $this->stringVar;    }    public function getArrayVar(): array    {        return $this->arrayVar;    }}';
 
         $s = $this->sG->classSyntax();
         $actual = \str_replace("\n", '', $s);
@@ -245,7 +253,7 @@ class SyntaxGeneratorTest extends TestCase
         $this->assertEquals($expected, $actual);
 
         // tets array
-        $expected = "    const foo = [1, ['bar', 1.2], 3];\n";
+        $expected = "    const foo = [0 => 1, 1 => [0 => 'bar', 1 => 1.2], 2 => 3];\n";
         $actual = $this->sG->constantSyntax('foo', [1, ['bar', 1.2], 3]);
         $this->assertEquals($expected, $actual);
     }

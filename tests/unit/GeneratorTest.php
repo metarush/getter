@@ -121,7 +121,7 @@ class GeneratorTest extends TestCase
             '$intVar = 1;',
             '$floatVar = 1.2',
             '$boolVar = true;',
-            '$arrayVar = [\'x\'];'
+            '$arrayVar = [0 => \'x\'];'
         ];
 
         foreach ($expectedValues as $v)
@@ -226,7 +226,7 @@ class GeneratorTest extends TestCase
         $this->assertStringContainsString('const intVar = 9;', $classContent);
         $this->assertStringContainsString('const floatVar = 2.1;', $classContent);
         $this->assertStringContainsString('const boolVar = true;', $classContent);
-        $this->assertStringContainsString('const arrayVar = [\'foo\', 1.3];', $classContent);
+        $this->assertStringContainsString('const arrayVar = [0 => \'foo\', 1 => 1.3];', $classContent);
 
         \unlink($location . $className . '.php');
     }
