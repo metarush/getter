@@ -73,7 +73,7 @@ class SyntaxGeneratorTest extends TestCase
         $actual = $this->sG->fieldSyntax('foo', false);
         $this->assertEquals($expected, $actual);
 
-        // tets array
+        // tests array
         $expected = "    private \$foo = [0 => 1, 1 => 2, 2 => 3];\n";
         $actual = $this->sG->fieldSyntax('foo', [1, 2, 3]);
         $this->assertEquals($expected, $actual);
@@ -156,8 +156,8 @@ class SyntaxGeneratorTest extends TestCase
 
     public function testAssociativeArraySyntax()
     {
-        $array = [7 => 'foo', 8 => false, 9 => 'bar'];
-        $expected = "[7 => 'foo', 8 => false, 9 => 'bar']";
+        $array = [7 => 'foo', 8 => false, 'foo' => 'bar'];
+        $expected = "[7 => 'foo', 8 => false, 'foo' => 'bar']";
         $actual = $this->sG->arraySyntax($array);
 
         $this->assertEquals($expected, $actual);

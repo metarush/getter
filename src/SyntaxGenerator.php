@@ -144,8 +144,10 @@ class SyntaxGenerator
     {
         $s = '[';
 
-        foreach ($a as $k => $v)
-            $s .= $k . ' => ' . $this->varValueSyntax($v) . ', ';
+        foreach ($a as $k => $v) {
+            $key = \is_string($k) ? "'{$k}'" : $k;
+            $s .= $key . ' => ' . $this->varValueSyntax($v) . ', ';
+        }
 
         return \trim($s, ', ') . ']';
     }

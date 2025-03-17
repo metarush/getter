@@ -1,10 +1,16 @@
 # CHANGELOG
 
+## 3.2.1 - 2025-03-17
+
+# Fixed
+
+- Fix associative arrays not working on string keys in YAML adapter.
+
 ## 3.2.0 - 2020-01-10
 
 ### Added
 
-- Add support for associative arrays in YAML adapter
+- Add support for associative arrays in YAML adapter.
 
 ## 3.1.1 - 2019-06-12
 
