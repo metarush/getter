@@ -138,7 +138,6 @@ If you want to dynamically change the values of the dummified data on runtime, u
 You can then call the generated class and inject an array of replacement values on runtime:
 
 ```php
-
 // $replacementValues should contain key value pair that matches the dummified data
 
 $newClass = new MyNewClass($replacementValues);
@@ -157,3 +156,7 @@ Note: You should only call `->setConstructorType()` once
 ### Generate constants
 
 If you want to generate the key/value pairs as constants, use `->setGenerateAsConstants(true)` or via CLI `--constants`.
+
+### Generate constants with var name as value
+
+If you want to generate the constants with var name as literal value, use `->setGenerateAsConstants(true)` and `->setConstantNameAsValue(true)` or via CLI `--constants --constantNameAsValue`.

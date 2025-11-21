@@ -230,4 +230,30 @@ class GeneratorTest extends TestCase
 
         \unlink($location . $className . '.php');
     }
+
+    public function testGenerateContantNameAsValue()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'ConstantNameAsValueTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('env')
+            ->setClassName($className)
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.env')
+            ->setGenerateAsConstants(true)
+            ->setConstantNameAsValue(true)
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        $classContent = \file_get_contents($location . $className . '.php');
+
+        $this->assertStringContainsString('const stringVar = \'stringVar\';', $classContent);
+        $this->assertStringContainsString('const intVar = \'intVar\';', $classContent);
+        $this->assertStringContainsString('const floatVar = \'floatVar\';', $classContent);
+        $this->assertStringContainsString('const boolVar = \'boolVar\';', $classContent);
+
+        \unlink($location . $className . '.php');
+    }
 }

@@ -6,7 +6,6 @@ namespace MetaRush\Getter;
 
 class Config
 {
-
     const CONSTRUCTOR_CALL_PARENT = 1;
     const CONSTRUCTOR_DATA_REPLACER = 2;
     const CONSTRUCTOR_BOTH = 3;
@@ -80,6 +79,13 @@ class Config
      * @var bool
      */
     private $generateAsConstants;
+
+    /**
+     * Used with setGenerateAsConstants() to set the constant names as literal values
+     *
+     * @var bool
+     */
+    private $constantNameAsValue;
 
     public function getAdapter(): string
     {
@@ -189,5 +195,16 @@ class Config
     {
         $this->generateAsConstants = $generateAsConstants;
         return $this;
+    }
+
+    public function setConstantNameAsValue(bool $constantNameAsValue)
+    {
+        $this->constantNameAsValue = $constantNameAsValue;
+        return $this;
+    }
+
+    public function getConstantNameAsValue(): ?bool
+    {
+        return $this->constantNameAsValue;
     }
 }

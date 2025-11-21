@@ -33,7 +33,7 @@ class SyntaxGenerator
 
         if ($this->cfg->getGenerateAsConstants()) {
             foreach ($data as $k => $v)
-                $s .= $this->constantSyntax($k, $v);
+                $s .= $this->constantSyntax($k, $v, $this->cfg->getConstantNameAsValue());
             $s .= "\n";
         }
 
@@ -243,13 +243,15 @@ class SyntaxGenerator
      * Get class constant syntax
      *
      * @param string $constantName
-     * @param type $value
+     * @param mixed $value
+     * @param bool|null $nameAsValue
      * @return string
      */
-    public function constantSyntax(string $constantName, $value): string
+    public function constantSyntax(string $constantName, $value, ?bool $nameAsValue = null): string
     {
-        $varValueSyntax = $this->varValueSyntax($value);
+        if ($nameAsValue)
+            return '    const ' . $constantName . " = {$this->varValueSyntax($constantName)};\n";
 
-        return '    const ' . $constantName . " = $varValueSyntax;\n";
+        return '    const ' . $constantName . " = {$this->varValueSyntax($value)};\n";
     }
 }

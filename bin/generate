@@ -21,6 +21,7 @@ $longOpts = [
     'callParent', // include constructor with call parent
     'dataReplacer', // include constructor with data replacer
     'constants', // generate the key/value pairs as contstants
+    'constantNameAsValue', // used with --constants to generate constant name as literal value
 ];
 
 $opts = \getopt($shortOpts, $longOpts);
@@ -47,6 +48,9 @@ if (isset($opts['dummify']))
 // optionally set the key/value pairs as constants
 if (isset($opts['constants']))
     $generator->setGenerateAsConstants(true);
+
+if (isset($opts['constantNameAsValue']))
+    $generator->setConstantNameAsValue(true);
 
 // determine constructor type if any
 if (isset($opts['callParent']) && !isset($opts['dataReplacer']))

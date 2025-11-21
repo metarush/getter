@@ -1,8 +1,14 @@
 # CHANGELOG
 
+## 3.3.0 - 2025-11-22
+
+### Added
+
+- Added setConstantNameAsValue() and --constantNameAsValue in config.
+
 ## 3.2.1 - 2025-03-17
 
-# Fixed
+### Fixed
 
 - Fix associative arrays not working on string keys in YAML adapter.
 

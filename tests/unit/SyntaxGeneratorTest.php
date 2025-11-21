@@ -256,5 +256,10 @@ class SyntaxGeneratorTest extends TestCase
         $expected = "    const foo = [0 => 1, 1 => [0 => 'bar', 1 => 1.2], 2 => 3];\n";
         $actual = $this->sG->constantSyntax('foo', [1, ['bar', 1.2], 3]);
         $this->assertEquals($expected, $actual);
+
+        // test constant name as literal value
+        $expected = "    const foo = 'foo';\n";
+        $actual = $this->sG->constantSyntax('foo', 'bar', true);
+        $this->assertEquals($expected, $actual);
     }
 }
