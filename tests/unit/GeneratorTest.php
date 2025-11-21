@@ -267,6 +267,7 @@ class GeneratorTest extends TestCase
             ->setClassName($className)
             ->setLocation($location)
             ->setSourceFile($location . 'sample.env')
+            ->setGenerateAsConstants(true)
             ->setNoMethods(true)
             ->generate();
 

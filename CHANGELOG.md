@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.4.1 - 2025-11-22
+
+### Added
+
+- Generation of private properties removed if setNoMethods(true).
+
 ## 3.4.0 - 2025-11-22
 
 ### Added

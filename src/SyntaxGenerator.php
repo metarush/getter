@@ -37,9 +37,11 @@ class SyntaxGenerator
             $s .= "\n";
         }
 
-        foreach ($data as $k => $v)
-            $s .= $this->propertySyntax($k, $v);
-        $s .= "\n";
+        if (!$this->cfg->getNoMethods()) {
+            foreach ($data as $k => $v)
+                $s .= $this->propertySyntax($k, $v);
+            $s .= "\n";
+        }
 
         if ($constructorType) {
             if ($constructorType === Config::CONSTRUCTOR_CALL_PARENT)
