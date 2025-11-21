@@ -39,7 +39,7 @@ class SyntaxGeneratorTest extends TestCase
     {
         $expected = '    public function getFoo(): string    {        return $this->foo;    }';
 
-        $s = $this->sG->propertySyntax('foo', 'string');
+        $s = $this->sG->methodSyntax('foo', 'string');
         // convert string to one line for easy testing
         $actual = \str_replace("\n", '', $s);
 
@@ -48,34 +48,34 @@ class SyntaxGeneratorTest extends TestCase
         // ------------------------------------------------
 
         $this->expectException('Exception');
-        $s = $this->sG->propertySyntax('foo', 'zstring');
+        $s = $this->sG->methodSyntax('foo', 'zstring');
     }
 
     public function testFieldSyntax()
     {
         // test string
         $expected = "    private \$foo = 'bar';\n";
-        $actual = $this->sG->fieldSyntax('foo', 'bar');
+        $actual = $this->sG->propertySyntax('foo', 'bar');
         $this->assertEquals($expected, $actual);
 
         // test int
         $expected = "    private \$foo = 9;\n";
-        $actual = $this->sG->fieldSyntax('foo', 9);
+        $actual = $this->sG->propertySyntax('foo', 9);
         $this->assertEquals($expected, $actual);
 
         // test float
         $expected = "    private \$foo = 1.2;\n";
-        $actual = $this->sG->fieldSyntax('foo', 1.2);
+        $actual = $this->sG->propertySyntax('foo', 1.2);
         $this->assertEquals($expected, $actual);
 
         // test bool
         $expected = "    private \$foo = false;\n";
-        $actual = $this->sG->fieldSyntax('foo', false);
+        $actual = $this->sG->propertySyntax('foo', false);
         $this->assertEquals($expected, $actual);
 
         // tests array
         $expected = "    private \$foo = [0 => 1, 1 => 2, 2 => 3];\n";
-        $actual = $this->sG->fieldSyntax('foo', [1, 2, 3]);
+        $actual = $this->sG->propertySyntax('foo', [1, 2, 3]);
         $this->assertEquals($expected, $actual);
     }
 

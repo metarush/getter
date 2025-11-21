@@ -38,7 +38,7 @@ class SyntaxGenerator
         }
 
         foreach ($data as $k => $v)
-            $s .= $this->fieldSyntax($k, $v);
+            $s .= $this->propertySyntax($k, $v);
         $s .= "\n";
 
         if ($constructorType) {
@@ -50,10 +50,11 @@ class SyntaxGenerator
                 $s .= $this->constructorWithDataReplacerSyntax(true);
         }
 
-        foreach ($data as $k => $v) {
-            $type = $this->getType($v);
-            $s .= $this->propertySyntax($k, $type);
-        }
+        if (!$this->cfg->getNoMethods())
+            foreach ($data as $k => $v) {
+                $type = $this->getType($v);
+                $s .= $this->methodSyntax($k, $type);
+            }
 
         $s .= "}\n";
 
@@ -61,13 +62,13 @@ class SyntaxGenerator
     }
 
     /**
-     * Get class field syntax
+     * Get class property syntax
      *
      * @param string $fieldName
      * @param type $value
      * @return string
      */
-    public function fieldSyntax(string $fieldName, $value): string
+    public function propertySyntax(string $fieldName, $value): string
     {
         $varValueSyntax = $this->varValueSyntax($value);
 
@@ -75,14 +76,14 @@ class SyntaxGenerator
     }
 
     /**
-     * Get class property syntax
+     * Get class method syntax
      *
      * @param string $name
      * @param string $type
      * @return string
      * @throws Exception
      */
-    public function propertySyntax(string $name, string $type): string
+    public function methodSyntax(string $name, string $type): string
     {
         if (!$this->validType($type))
             throw new Exception('Invalid argument: ' . $type);

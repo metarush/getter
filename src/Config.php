@@ -87,6 +87,13 @@ class Config
      */
     private $constantNameAsValue;
 
+    /**
+     * Don't generate methods. Usually used with setGenerateAsConstants(), if you want to generate constants only
+     *
+     * @var bool
+     */
+    private $noMethods;
+
     public function getAdapter(): string
     {
         return $this->adapter;
@@ -206,5 +213,16 @@ class Config
     public function getConstantNameAsValue(): ?bool
     {
         return $this->constantNameAsValue;
+    }
+
+    public function setNoMethods(bool $noMethods)
+    {
+        $this->noMethods = $noMethods;
+        return $this;
+    }
+
+    public function getNoMethods(): ?bool
+    {
+        return $this->noMethods;
     }
 }

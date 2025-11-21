@@ -102,15 +102,15 @@ class MyNewClass
 
 ### Include namespace
 
-If you want to include a namespace, use `->setNamespace('MyNamespace')` or via CLI `--namespace MyNamespace`
+Include a namespace, use `->setNamespace('MyNamespace')` or via CLI `--namespace MyNamespace`
 
 ### Extend class
 
-If you want to extend a class, use `->setExtendedClass('MyBaseClass')` or via CLI `--extendClass MyBaseClass`
+Extend a class, use `->setExtendedClass('MyBaseClass')` or via CLI `--extendClass MyBaseClass`
 
 ### Dummify field values
 
-If you want to dummify field values, use the `->setDummifyValues(true)` config method or via CLI `--dummify`
+Dummify field values, use the `->setDummifyValues(true)` config method or via CLI `--dummify`
 
 #### Why dummify?
 
@@ -133,7 +133,7 @@ If dummified, the generated field values are as follows:
 
 ### Data replacer for dummified values
 
-If you want to dynamically change the values of the dummified data on runtime, use  `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_DATA_REPLACER);` or via CLI `--dataReplacer`
+Dynamically change the values of the dummified data on runtime, use  `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_DATA_REPLACER);` or via CLI `--dataReplacer`
 
 You can then call the generated class and inject an array of replacement values on runtime:
 
@@ -145,18 +145,22 @@ $newClass = new MyNewClass($replacementValues);
 
 ### Call parent
 
-If you want to call a parent class, use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_CALL_PARENT)` or via CLI `--callParent`
+Call a parent class, use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_CALL_PARENT)` or via CLI `--callParent`
 
 ### Call parent and use data replacer
 
-If you want to call a parent class and also use data replacer, use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_BOTH)` or via CLI `--callParent --dataReplacer`
+Call a parent class and also use data replacer, use `->setConstructorType(\MetaRush\Getter\Config::CONSTRUCTOR_BOTH)` or via CLI `--callParent --dataReplacer`
 
 Note: You should only call `->setConstructorType()` once
 
 ### Generate constants
 
-If you want to generate the key/value pairs as constants, use `->setGenerateAsConstants(true)` or via CLI `--constants`.
+Generate the key/value pairs as constants, use `->setGenerateAsConstants(true)` or via CLI `--constants`.
 
-### Generate constants with var name as value
+### Generate constants with key as both constant name and value
 
-If you want to generate the constants with var name as literal value, use `->setGenerateAsConstants(true)` and `->setConstantNameAsValue(true)` or via CLI `--constants --constantNameAsValue`.
+Use `->setGenerateAsConstants(true)` and `->setConstantNameAsValue(true)` or via CLI `--constants --constantNameAsValue`.
+
+### Don't generate getter methods
+
+Use  `->setNoMethods(true)` or via CLI `--noMethods`. Usually used when you only want to generate constants.

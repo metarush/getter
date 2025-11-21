@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 3.4.0 - 2025-11-22
+
+### Added
+
+- Added setNoMethods() and --noMethods in config.
+- Renamed internal methods.
+
 ## 3.3.0 - 2025-11-22
 
 ### Added

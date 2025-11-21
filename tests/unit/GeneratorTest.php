@@ -256,4 +256,26 @@ class GeneratorTest extends TestCase
 
         \unlink($location . $className . '.php');
     }
+
+    public function testNoMethods()
+    {
+        $location = __DIR__ . '/samples/';
+        $className = 'NoMethodsTest';
+
+        (new \MetaRush\Getter\Generator)
+            ->setAdapter('env')
+            ->setClassName($className)
+            ->setLocation($location)
+            ->setSourceFile($location . 'sample.env')
+            ->setNoMethods(true)
+            ->generate();
+
+        $this->assertFileExists($location . $className . '.php');
+
+        $classContent = \file_get_contents($location . $className . '.php');
+
+        $this->assertStringNotContainsString('public function getStringVar()', $classContent);
+
+        \unlink($location . $className . '.php');
+    }
 }
