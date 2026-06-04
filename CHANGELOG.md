@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 4.0.0 - 2026-06-04
+
+### Changed
+
+- Upgrade symfony/yaml to v5.
+
 ## 3.4.2 - 2026-06-04
 
 ### Fixed
