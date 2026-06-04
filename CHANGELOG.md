@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.4.2 - 2026-06-04
+
+### Fixed
+
+- Fix semver minor version of composer packages.
+
 ## 3.4.1 - 2025-11-22
 
 ### Added
